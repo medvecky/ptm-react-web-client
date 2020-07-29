@@ -13,11 +13,12 @@ const CreateTask: React.FC<CreateTaskProps> = props => {
         props.onCreateTask(enteredText);
     };
     return (
-        <div style={{margin: '3.5%'}}>
+        <div>
             <Card
                 style={{
                     width: '18rem',
-                    padding: '1%'
+                    padding: '1%',
+                    margin: '2rem'
                 }}
                 border="info"
                 text="info"
