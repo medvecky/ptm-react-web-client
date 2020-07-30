@@ -1,10 +1,12 @@
 import React from 'react';
-import Task from "./Task";
+import TaskForm from "./TaskForm";
+import {EditTaskDto} from "../edit-task.dto";
 
 interface TasksListProps {
-    items: { id: string, text: string }[];
+    // @ts-ignore
+    items: TaskForm [];
     onDeleteTask: (taskId: string) => void;
-    onEditTask: (newText: string, taskId: string) => void;
+    onEditTask: (editTaskDto: EditTaskDto) => void;
 }
 
 const TasksList: React.FC<TasksListProps> = props => {
@@ -14,7 +16,7 @@ const TasksList: React.FC<TasksListProps> = props => {
             <ul style={{listStyleType: "none"}}>
                 {props.items.map(task =>
                     <li key={task.id}>
-                        <Task task={task} onDeleteTask={props.onDeleteTask} onEditTask={props.onEditTask}/>
+                        <TaskForm task={task} onDeleteTask={props.onDeleteTask} onEditTask={props.onEditTask}/>
                     </li>)}
             </ul>
         </div>

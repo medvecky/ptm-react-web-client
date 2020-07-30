@@ -1,7 +1,7 @@
-export interface Task {
+export interface EditTaskDto {
     id: string;
     title: string;
     description: string;
-    status: string;
     projectId: string;
+    status: string;
 }
