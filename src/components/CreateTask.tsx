@@ -1,6 +1,5 @@
 import React, {useRef} from 'react';
 import {Form, Button, Card} from 'react-bootstrap';
-
 interface CreateTaskProps {
     onCreateTask: (taskText: string) => void;
 }
@@ -18,7 +17,7 @@ const CreateTask: React.FC<CreateTaskProps> = props => {
                 style={{
                     width: '18rem',
                     padding: '1%',
-                    margin: '2rem'
+                    margin: '1rem'
                 }}
                 border="info"
                 text="info"

@@ -13,18 +13,16 @@ interface TaskProps {
 
 const Task: React.FC<TaskProps> = props => {
     const [isEditable,  setEditable] = useState<boolean>(false);
-    let editForm = null;
+    let displayForm = null;
     const onEdit = () => {
         setEditable(!isEditable);
     };
 
     if(isEditable) {
-         editForm = (<EditTaskForm task={props.task} onSubmit={props.onEditTask} changeVisibility={onEdit}/>);
+         displayForm = (<EditTaskForm task={props.task} onSubmit={props.onEditTask} changeVisibility={onEdit}/>);
 
-     }
-
-    return (
-        <div>
+     } else {
+        displayForm = (
             <Card
                 style={{
                     width: '18rem',
@@ -47,7 +45,12 @@ const Task: React.FC<TaskProps> = props => {
                     </Button>
                 </Card.Body>
             </Card>
-            {editForm}
+        );
+    }
+
+    return (
+        <div>
+            {displayForm}
         </div>
     );
 };

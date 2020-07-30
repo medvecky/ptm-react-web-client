@@ -31,7 +31,7 @@ const App: React.FC = () => {
     };
 
     return (
-        <div className="App">
+        <div>
             <h1>Todo app</h1>
             <TasksList items={tasks} onDeleteTask={deleteTaskHandler} onEditTask={editTaskHandler}/>
             <CreateTask onCreateTask={addTaskHandler} />

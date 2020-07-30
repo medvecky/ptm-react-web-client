@@ -22,7 +22,7 @@ const EditTaskForm: React.FC<EditTaskProps> = (props) => {
                 style={{
                     width: '18rem',
                     padding: '1%',
-                    margin: '2rem'
+                    margin: '1rem'
                 }}
                 border="info"
                 text="info"
