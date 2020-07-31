@@ -5,6 +5,40 @@ React based web client for:
 
 [Personal Task Management REST API service](https://github.com/medvecky/ptm-server)  
 
+## Env setup
+
+### Prerequisites
+
+* Installed [docker](https://www.docker.com/products/docker-desktop)
+* Installed [Node.js](https://nodejs.org) (only for local development)
+* started ptm-server, description in documentation:
+   [ptm-server/README](https://github.com/medvecky/ptm-server/blob/master/README.md)
+
+### App installation
+
+start client: 
+  ```bash
+  docker-compose build
+  docker-compose up
+  ```
+by default service operable on 
+[http://localhost](http://localhost)
+
+### App installation for local development
+
+#### Modules installation
+
+```bash
+$ npm install
+```
+
+#### Running the app
+```bash
+$ npm run start
+```
+
+by default service operable on 
+[http://localhost:3001](http://localhost:3001)
 
 ### Available Scripts
 

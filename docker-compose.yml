@@ -1,0 +1,10 @@
+version: '3.1'
+services:
+  ptm-react-web-client:
+    build: .
+    ports:
+      - '80:80'
+    networks:
+      - ptm-net
+networks:
+  ptm-net:

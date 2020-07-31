@@ -19,12 +19,10 @@ const CreateTaskForm: React.FC<CreateTaskProps> = props => {
         props.onCreateTask(createTaskDto);
     };
     return (
-        <div>
             <Card
                 style={{
-                    width: '18rem',
-                    padding: '1%',
-                    margin: '1rem'
+                    padding: '2%',
+                    width: '100%'
                 }}
                 border="info"
                 text="info"
@@ -42,12 +40,11 @@ const CreateTaskForm: React.FC<CreateTaskProps> = props => {
                         <Form.Label>Project</Form.Label>
                         <Form.Control type="text" placeholder="Enter task's project" ref={projectInputRef}/>
                     </Form.Group>
-                    <Button variant="outline-info" type="submit">
+                    <Button variant="outline-info" type="submit" size='sm'>
                         Create task
                     </Button>
                 </Form>
             </Card>
-        </div>
     );
 };
 

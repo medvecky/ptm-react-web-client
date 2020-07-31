@@ -1,0 +1,15 @@
+.main {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+}
+
+.col {
+    padding: 0;
+}
+
+@media only screen and (max-width: 900px) {
+    .main {
+        width: 100%;
+    }
+}

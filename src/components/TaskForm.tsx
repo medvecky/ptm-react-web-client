@@ -11,22 +11,18 @@ interface TaskProps {
 }
 
 const TaskForm: React.FC<TaskProps> = props => {
-    const [isEditable,  setEditable] = useState<boolean>(false);
+    const [isEditable, setEditable] = useState<boolean>(false);
     let displayForm = null;
     const onEdit = () => {
         setEditable(!isEditable);
     };
 
-    if(isEditable) {
-         displayForm = (<EditTaskForm task={props.task} onSubmit={props.onEditTask} changeVisibility={onEdit}/>);
+    if (isEditable) {
+        displayForm = (<EditTaskForm task={props.task} onSubmit={props.onEditTask} changeVisibility={onEdit}/>);
 
-     } else {
+    } else {
         displayForm = (
             <Card
-                style={{
-                    width: '18rem',
-                    margin: '1rem'
-                }}
                 border="info"
                 text="info"
             >
@@ -41,10 +37,18 @@ const TaskForm: React.FC<TaskProps> = props => {
                     <Card.Text>
                         {props.task.status}
                     </Card.Text>
-                    <Button style={{margin: '1%'}} variant="outline-info" onClick={() =>onEdit()}>Edit </Button>
+                    <Button
+                        style={{margin: '1%'}}
+                        variant="outline-info"
+                        onClick={() => onEdit()}
+                        size='sm'
+                    >
+                        Edit
+                    </Button>
                     <Button
                         variant="outline-info"
                         onClick={props.onDeleteTask.bind(null, props.task.id)}
+                        size='sm'
                     >
                         Delete
                     </Button>
@@ -54,7 +58,10 @@ const TaskForm: React.FC<TaskProps> = props => {
     }
 
     return (
-        <div>
+        <div style={{
+            width: '100%',
+            margin: '1%'
+        }}>
             {displayForm}
         </div>
     );

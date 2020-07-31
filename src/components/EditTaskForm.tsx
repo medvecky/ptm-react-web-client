@@ -27,16 +27,15 @@ const EditTaskForm: React.FC<EditTaskProps> = (props) => {
         props.changeVisibility();
     };
     return (
-        <div>
-            <Card
-                style={{
-                    width: '18rem',
-                    padding: '1%',
-                    margin: '1rem'
-                }}
-                border="info"
-                text="info"
-            >
+        <Card
+            style={{
+                width: '100%',
+                margin: '1%',
+                padding: '1%'
+            }}
+            border="info"
+            text="info"
+        >
             <Form onSubmit={editTaskHandler}>
                 <Form.Group controlId="formTitle">
                     <Form.Label>Title</Form.Label>
@@ -70,12 +69,11 @@ const EditTaskForm: React.FC<EditTaskProps> = (props) => {
                         defaultValue={props.task.projectId}
                         ref={projectRef}/>
                 </Form.Group>
-                <Button variant="outline-info" type="submit">
+                <Button variant="outline-info" type="submit" size='sm'>
                     Save changes
                 </Button>
             </Form>
-            </Card>
-        </div>
+        </Card>
     );
 };
 
