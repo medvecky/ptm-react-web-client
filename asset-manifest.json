@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/ptm/static/css/main.9aea649f.chunk.css",
-    "main.js": "/ptm/static/js/main.8909296d.chunk.js",
-    "main.js.map": "/ptm/static/js/main.8909296d.chunk.js.map",
-    "runtime-main.js": "/ptm/static/js/runtime-main.5eda5eda.js",
-    "runtime-main.js.map": "/ptm/static/js/runtime-main.5eda5eda.js.map",
-    "static/css/2.af3c1da9.chunk.css": "/ptm/static/css/2.af3c1da9.chunk.css",
-    "static/js/2.09f7d9df.chunk.js": "/ptm/static/js/2.09f7d9df.chunk.js",
-    "static/js/2.09f7d9df.chunk.js.map": "/ptm/static/js/2.09f7d9df.chunk.js.map",
-    "index.html": "/ptm/index.html",
-    "precache-manifest.d86a08252083905def99ddd8ed04dd22.js": "/ptm/precache-manifest.d86a08252083905def99ddd8ed04dd22.js",
-    "service-worker.js": "/ptm/service-worker.js",
-    "static/css/2.af3c1da9.chunk.css.map": "/ptm/static/css/2.af3c1da9.chunk.css.map",
-    "static/css/main.9aea649f.chunk.css.map": "/ptm/static/css/main.9aea649f.chunk.css.map",
-    "static/js/2.09f7d9df.chunk.js.LICENSE.txt": "/ptm/static/js/2.09f7d9df.chunk.js.LICENSE.txt"
+    "main.css": "/ptm-react-web-client/static/css/main.9aea649f.chunk.css",
+    "main.js": "/ptm-react-web-client/static/js/main.60d9079d.chunk.js",
+    "main.js.map": "/ptm-react-web-client/static/js/main.60d9079d.chunk.js.map",
+    "runtime-main.js": "/ptm-react-web-client/static/js/runtime-main.ba240d7f.js",
+    "runtime-main.js.map": "/ptm-react-web-client/static/js/runtime-main.ba240d7f.js.map",
+    "static/css/2.af3c1da9.chunk.css": "/ptm-react-web-client/static/css/2.af3c1da9.chunk.css",
+    "static/js/2.09f7d9df.chunk.js": "/ptm-react-web-client/static/js/2.09f7d9df.chunk.js",
+    "static/js/2.09f7d9df.chunk.js.map": "/ptm-react-web-client/static/js/2.09f7d9df.chunk.js.map",
+    "index.html": "/ptm-react-web-client/index.html",
+    "precache-manifest.bcbe3ad2be8e99d48252f58885d2189b.js": "/ptm-react-web-client/precache-manifest.bcbe3ad2be8e99d48252f58885d2189b.js",
+    "service-worker.js": "/ptm-react-web-client/service-worker.js",
+    "static/css/2.af3c1da9.chunk.css.map": "/ptm-react-web-client/static/css/2.af3c1da9.chunk.css.map",
+    "static/css/main.9aea649f.chunk.css.map": "/ptm-react-web-client/static/css/main.9aea649f.chunk.css.map",
+    "static/js/2.09f7d9df.chunk.js.LICENSE.txt": "/ptm-react-web-client/static/js/2.09f7d9df.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.5eda5eda.js",
+    "static/js/runtime-main.ba240d7f.js",
     "static/css/2.af3c1da9.chunk.css",
     "static/js/2.09f7d9df.chunk.js",
     "static/css/main.9aea649f.chunk.css",
-    "static/js/main.8909296d.chunk.js"
+    "static/js/main.60d9079d.chunk.js"
   ]
 }
