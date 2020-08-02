@@ -1,11 +1,12 @@
 import React, {useState} from "react";
-import {Container, Row, Col} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import {Task} from "../../task.model";
 import {CreateTaskDto} from "../../create-task.dto";
 import {EditTaskDto} from "../../edit-task.dto";
 import TasksList from "../TasksList";
 import CreateTaskForm from "../CreateTaskForm";
 import {updateTaskValues} from "./PtmContainerFunctions";
+import {TaskStatus} from "../../task.status.enum";
 
 
 const PTMContainer: React.FC = () => {
@@ -20,7 +21,7 @@ const PTMContainer: React.FC = () => {
                         title: createTaskDto.title,
                         description: createTaskDto.description,
                         projectId: createTaskDto.projectId,
-                        status: 'OPEN'
+                        status: TaskStatus.OPEN
                     }
                 ]
         );

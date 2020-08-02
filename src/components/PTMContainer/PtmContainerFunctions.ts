@@ -1,5 +1,6 @@
 import {EditTaskDto} from "../../edit-task.dto";
 import {Task} from "../../task.model";
+import {TaskStatus} from "../../task.status.enum";
 
 export function updateTaskValues(editTaskDto: EditTaskDto, task: Task) {
     if (editTaskDto.title) {
@@ -15,6 +16,7 @@ export function updateTaskValues(editTaskDto: EditTaskDto, task: Task) {
     }
 
     if (editTaskDto.status) {
-        task.status = editTaskDto.status;
+        // @ts-ignore
+        task.status = TaskStatus[editTaskDto.status];
     }
 }
