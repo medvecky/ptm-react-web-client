@@ -1,7 +1,7 @@
 import React from 'react';
 import TaskForm from "./TaskForm";
 import {EditTaskDto} from "../edit-task.dto";
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Badge } from 'react-bootstrap';
 import {Task} from "../task.model";
 
 interface TasksListProps {
@@ -15,9 +15,14 @@ interface TasksListProps {
 const TasksList: React.FC<TasksListProps> = props => {
 
     return (
-        <Container>
+        <Container
+            style={{
+                margin: '0',
+                maxWidth: '100%'
+            }}
+        >
             <Row>
-                {props.filter}
+                <h4><Badge variant="info">{props.filter}</Badge></h4>
             </Row>
                 {props.items
                     .filter(task => task.status === props.filter)

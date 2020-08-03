@@ -5,12 +5,19 @@ import {CreateTaskDto} from "../../create-task.dto";
 import {EditTaskDto} from "../../edit-task.dto";
 import TasksList from "../TasksList";
 import CreateTaskForm from "../CreateTaskForm";
-import {updateTaskValues} from "./PtmContainerFunctions";
+import {updateProjectValues, updateTaskValues} from "./PtmContainerFunctions";
 import {TaskStatus} from "../../task.status.enum";
+import NavBar from "../NavBar";
+import {Project} from "../../project.model";
+import {CreateProjectDto} from "../../create-project.dto";
+import CreateProjectForm from "../CreateProjectForm";
+import {EditProjectDto} from "../../edit-project.dto";
+import ProjectsList from "../ProjectsList";
 
 
 const PTMContainer: React.FC = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
+    const [projects, setProjects] = useState<Project[]>([]);
 
     const addTaskHandler = (createTaskDto: CreateTaskDto) => {
         setTasks(
@@ -22,6 +29,19 @@ const PTMContainer: React.FC = () => {
                         description: createTaskDto.description,
                         projectId: createTaskDto.projectId,
                         status: TaskStatus.OPEN
+                    }
+                ]
+        );
+    };
+
+    const addProjectHandler = (createProjectDto: CreateProjectDto) => {
+        setProjects(
+            prevProjects =>
+                [...prevProjects,
+                    {
+                        id: Math.random().toString(),
+                        title: createProjectDto.title,
+                        description: createProjectDto.description
                     }
                 ]
         );
@@ -39,20 +59,41 @@ const PTMContainer: React.FC = () => {
         setTasks(newTasks);
     }
 
+    const editProjectHandler = (editProjectDto: EditProjectDto) => {
+        const projectIndex = projects.findIndex(project => project.id === editProjectDto.id);
+
+        const project: Project = {...projects[projectIndex]};
+        updateProjectValues(editProjectDto, project);
+
+        const newProjects = [...projects];
+        newProjects[projectIndex] = project;
+
+        setProjects(newProjects);
+    }
+
     const deleteTaskHandler = (taskId: string) => {
         setTasks(prevTasks => {
             return prevTasks.filter(task => task.id !== taskId);
         });
     };
 
+    const deleteProjectHandler = (projectId: string) => {
+        setProjects(prevProjects => {
+            return prevProjects.filter(project => project.id !== projectId);
+        });
+    };
+
     return (
         <div className='main'>
-            <Container>
+            <NavBar />
+            <Container
+                style={{
+                    margin: '0',
+                    maxWidth: '100%'
+                }}
+            >
                 <Row>
-                    <h3>Todo app</h3>
-                </Row>
-                <Row>
-                    <Col xs={10} sm={4} lg={4}>
+                    <Col xs={10} sm={3} lg={3}>
                         <TasksList
                             filter='OPEN'
                             items={tasks}
@@ -60,7 +101,7 @@ const PTMContainer: React.FC = () => {
                             onEditTask={editTaskHandler}
                         />
                     </Col>
-                    <Col xs={10} sm={4} lg={4}>
+                    <Col xs={10} sm={3} lg={3}>
                         <TasksList
                             filter='IN_PROGRESS'
                             items={tasks}
@@ -68,7 +109,7 @@ const PTMContainer: React.FC = () => {
                             onEditTask={editTaskHandler}
                         />
                     </Col>
-                    <Col xs={10} sm={4} lg={4}>
+                    <Col xs={10} sm={3} lg={3}>
                         <TasksList
                             filter='DONE'
                             items={tasks}
@@ -76,14 +117,24 @@ const PTMContainer: React.FC = () => {
                             onEditTask={editTaskHandler}
                         />
                     </Col>
+                    <Col xs={10} sm={3} lg={3}>
+                        <ProjectsList
+                            items={projects}
+                            onDeleteProject={deleteProjectHandler}
+                            onEditProject={editProjectHandler}
+                        />
+                    </Col>
                 </Row>
                 <Row>
-                    <Col xs={10} sm={4} lg={4}>
+                    <Col xs={10} sm={3} lg={3}>
                         <CreateTaskForm onCreateTask={addTaskHandler}/>
                     </Col>
                     <Col>
                     </Col>
                     <Col>
+                    </Col>
+                    <Col xs={10} sm={3} lg={3}>
+                        <CreateProjectForm onCreateProject={addProjectHandler}/>
                     </Col>
                 </Row>
             </Container>
