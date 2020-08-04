@@ -8,6 +8,7 @@ interface ProjectProps {
     project: Project;
     onDeleteProject: (projectId: string) => void;
     onEditProject: (editProjectDto: EditProjectDto) => void;
+    onChangeFilter: (filter: string) => void;
 }
 
 const ProjectForm: React.FC<ProjectProps> = props => {
@@ -32,7 +33,11 @@ const ProjectForm: React.FC<ProjectProps> = props => {
                 text="info"
             >
                 <Card.Body>
-                    <Card.Title>{props.project.title}</Card.Title>
+                    <Card.Title
+                        onClick={() => props.onChangeFilter(props.project.title)}
+                    >
+                        {props.project.title}
+                    </Card.Title>
                     <Card.Text>
                         {props.project.description}
                     </Card.Text>

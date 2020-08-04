@@ -18,6 +18,7 @@ import ProjectsList from "../ProjectsList";
 const PTMContainer: React.FC = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [projects, setProjects] = useState<Project[]>([]);
+    const [projectFilter, setProjectFilter] = useState<string>('');
 
     const addTaskHandler = (createTaskDto: CreateTaskDto) => {
         setTasks(
@@ -95,26 +96,29 @@ const PTMContainer: React.FC = () => {
                 <Row>
                     <Col xs={10} sm={3} lg={3}>
                         <TasksList
-                            filter='OPEN'
+                            status='OPEN'
                             items={tasks}
                             onDeleteTask={deleteTaskHandler}
                             onEditTask={editTaskHandler}
+                            project={projectFilter}
                         />
                     </Col>
                     <Col xs={10} sm={3} lg={3}>
                         <TasksList
-                            filter='IN_PROGRESS'
+                            status='IN_PROGRESS'
                             items={tasks}
                             onDeleteTask={deleteTaskHandler}
                             onEditTask={editTaskHandler}
+                            project={projectFilter}
                         />
                     </Col>
                     <Col xs={10} sm={3} lg={3}>
                         <TasksList
-                            filter='DONE'
+                            status='DONE'
                             items={tasks}
                             onDeleteTask={deleteTaskHandler}
                             onEditTask={editTaskHandler}
+                            project={projectFilter}
                         />
                     </Col>
                     <Col xs={10} sm={3} lg={3}>
@@ -122,6 +126,7 @@ const PTMContainer: React.FC = () => {
                             items={projects}
                             onDeleteProject={deleteProjectHandler}
                             onEditProject={editProjectHandler}
+                            onChangeFilter={setProjectFilter}
                         />
                     </Col>
                 </Row>
@@ -134,7 +139,10 @@ const PTMContainer: React.FC = () => {
                     <Col>
                     </Col>
                     <Col xs={10} sm={3} lg={3}>
-                        <CreateProjectForm onCreateProject={addProjectHandler}/>
+                        <CreateProjectForm
+                            onCreateProject={addProjectHandler}
+                            onClearFilter={setProjectFilter}
+                        />
                     </Col>
                 </Row>
             </Container>

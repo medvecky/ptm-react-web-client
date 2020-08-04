@@ -3,6 +3,7 @@ import {Form, Button, Card} from 'react-bootstrap';
 import {CreateProjectDto} from "../create-project.dto";
 interface CreateProjectProps {
     onCreateProject: (createProjectDto: CreateProjectDto) => void;
+    onClearFilter: (filter: string) => void;
 }
 
 const CreateProjectForm: React.FC<CreateProjectProps> = props => {
@@ -37,6 +38,14 @@ const CreateProjectForm: React.FC<CreateProjectProps> = props => {
                     </Form.Group>
                     <Button variant="outline-info" type="submit" size='sm'>
                         Create Project
+                    </Button>
+                    <Button
+                        style = {{margin: '1px'}}
+                        variant="outline-info"
+                        size='sm'
+                        onClick={() => props.onClearFilter('')}
+                    >
+                        Clear filter
                     </Button>
                 </Form>
             </Card>

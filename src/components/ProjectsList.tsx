@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Badge } from 'react-bootstrap';
+import {Container, Row, Badge, Button} from 'react-bootstrap';
 import {EditProjectDto} from "../edit-project.dto";
 import ProjectForm from "./ProjectForm";
 import {Project} from "../project.model";
@@ -9,6 +9,7 @@ interface ProjectsListProps {
     items: Project [];
     onDeleteProject: (projectId: string) => void;
     onEditProject: (editProjectDto: EditProjectDto) => void;
+    onChangeFilter: (filter: string) => void;
 }
 
 const ProjectsList: React.FC<ProjectsListProps> = props => {
@@ -30,6 +31,7 @@ const ProjectsList: React.FC<ProjectsListProps> = props => {
                             project={project}
                             onDeleteProject={props.onDeleteProject}
                             onEditProject={props.onEditProject}
+                            onChangeFilter={props.onChangeFilter}
                         />
                     </Row>)}
         </Container>
