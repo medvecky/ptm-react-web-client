@@ -3,6 +3,7 @@ import {Card, Button} from "react-bootstrap";
 import EditTaskForm from "./EditTaskForm";
 import {EditTaskDto} from "../edit-task.dto";
 import {Task} from "../task.model";
+import {Link} from "react-router-dom";
 
 interface TaskProps {
     task: Task;
@@ -27,7 +28,17 @@ const TaskForm: React.FC<TaskProps> = props => {
                 text="info"
             >
                 <Card.Body>
-                    <Card.Title>{props.task.title}</Card.Title>
+                    <Card.Title>
+                        <Link style={{
+                            color: "lightseagreen"
+
+                        }}
+                            to={'/task/' + props.task.id}
+                            key={props.task.id}
+                        >
+                        {props.task.title}
+                        </Link>
+                    </Card.Title>
                     <Card.Text>
                         {props.task.description}
                     </Card.Text>

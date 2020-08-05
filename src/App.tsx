@@ -1,13 +1,15 @@
 import React from 'react';
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PTMContainer from "./components/PTMContainer/PTMContainer";
+import {BrowserRouter} from "react-router-dom";
 
 const App: React.FC = () => {
     return (
-        <div className='App'>
-            <PTMContainer />
-        </div>
+        <BrowserRouter>
+            <div className='App'>
+                <PTMContainer/>
+            </div>
+        </BrowserRouter>
     );
 };
 

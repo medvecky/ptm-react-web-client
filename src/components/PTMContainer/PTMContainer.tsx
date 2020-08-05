@@ -1,21 +1,20 @@
 import React, {useState} from "react";
-import {Col, Container, Row} from "react-bootstrap";
 import {Task} from "../../task.model";
 import {CreateTaskDto} from "../../create-task.dto";
 import {EditTaskDto} from "../../edit-task.dto";
-import TasksList from "../TasksList";
 import CreateTaskForm from "../CreateTaskForm";
 import {updateProjectValues, updateTaskValues} from "./PtmContainerFunctions";
 import {TaskStatus} from "../../task.status.enum";
 import NavBar from "../NavBar";
 import {Project} from "../../project.model";
 import {CreateProjectDto} from "../../create-project.dto";
-import CreateProjectForm from "../CreateProjectForm";
 import {EditProjectDto} from "../../edit-project.dto";
-import ProjectsList from "../ProjectsList";
+import ListsContainer from "../ListsContainer";
+import CreateProjectForm from "../CreateProjectForm";
+import {Route, withRouter} from "react-router";
 
 
-const PTMContainer: React.FC = () => {
+const PTMContainer: React.FC = (props) => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [projects, setProjects] = useState<Project[]>([]);
     const [projectFilter, setProjectFilter] = useState<string>('');
@@ -84,70 +83,45 @@ const PTMContainer: React.FC = () => {
         });
     };
 
+    const lists = () => (
+        <ListsContainer
+            tasks={tasks}
+            projects={projects}
+            projectFilter={projectFilter}
+            deleteTaskHandler={deleteTaskHandler}
+            editTaskHandler={editTaskHandler}
+            deleteProjectHandler={deleteProjectHandler}
+            editProjectHandler={editProjectHandler}
+            setProjectFilter={setProjectFilter}
+        />
+    );
+
+    const createTask = () => (
+        <CreateTaskForm onCreateTask={addTaskHandler}/>
+    );
+
+    const createProject = () => (
+        <CreateProjectForm onCreateProject={addProjectHandler} onClearFilter={setProjectFilter} />
+    );
+
+    const editTask = (props: any) => {
+        console.log('editTask', props)
+        return (
+            <h1>Edit task</h1>
+        );
+    };
+
+
+    console.log('PTMContainer',props);
     return (
         <div className='main'>
-            <NavBar />
-            <Container
-                style={{
-                    margin: '0',
-                    maxWidth: '100%'
-                }}
-            >
-                <Row>
-                    <Col xs={10} sm={3} lg={3}>
-                        <TasksList
-                            status='OPEN'
-                            items={tasks}
-                            onDeleteTask={deleteTaskHandler}
-                            onEditTask={editTaskHandler}
-                            project={projectFilter}
-                        />
-                    </Col>
-                    <Col xs={10} sm={3} lg={3}>
-                        <TasksList
-                            status='IN_PROGRESS'
-                            items={tasks}
-                            onDeleteTask={deleteTaskHandler}
-                            onEditTask={editTaskHandler}
-                            project={projectFilter}
-                        />
-                    </Col>
-                    <Col xs={10} sm={3} lg={3}>
-                        <TasksList
-                            status='DONE'
-                            items={tasks}
-                            onDeleteTask={deleteTaskHandler}
-                            onEditTask={editTaskHandler}
-                            project={projectFilter}
-                        />
-                    </Col>
-                    <Col xs={10} sm={3} lg={3}>
-                        <ProjectsList
-                            items={projects}
-                            onDeleteProject={deleteProjectHandler}
-                            onEditProject={editProjectHandler}
-                            onChangeFilter={setProjectFilter}
-                        />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={10} sm={3} lg={3}>
-                        <CreateTaskForm onCreateTask={addTaskHandler}/>
-                    </Col>
-                    <Col>
-                    </Col>
-                    <Col>
-                    </Col>
-                    <Col xs={10} sm={3} lg={3}>
-                        <CreateProjectForm
-                            onCreateProject={addProjectHandler}
-                            onClearFilter={setProjectFilter}
-                        />
-                    </Col>
-                </Row>
-            </Container>
+            <NavBar/>
+            <Route path="/" exact component={lists}/>
+            <Route path="/new-task" exact component={createTask}/>
+            <Route path="/new-project" exact component={createProject}/>
+            <Route path="/task/:id" exact component={editTask} />
         </div>
     );
 };
 
-export default PTMContainer;
+export default withRouter(PTMContainer);

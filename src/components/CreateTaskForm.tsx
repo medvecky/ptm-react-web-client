@@ -22,7 +22,8 @@ const CreateTaskForm: React.FC<CreateTaskProps> = props => {
             <Card
                 style={{
                     padding: '2%',
-                    width: '100%'
+                    margin: '5%',
+                    width: '50%'
                 }}
                 border="info"
                 text="info"

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Row, Badge, Button} from 'react-bootstrap';
+import {Container, Row, Badge} from 'react-bootstrap';
 import {EditProjectDto} from "../edit-project.dto";
 import ProjectForm from "./ProjectForm";
 import {Project} from "../project.model";

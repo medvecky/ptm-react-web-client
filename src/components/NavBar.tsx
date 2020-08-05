@@ -1,5 +1,6 @@
 import React from 'react';
 import {Nav, Navbar, NavDropdown} from "react-bootstrap";
+import { Link } from 'react-router-dom';
 
 const NavBar :React.FC = () => {
     return (
@@ -8,8 +9,9 @@ const NavBar :React.FC = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="#home">Home</Nav.Link>
-                    <Nav.Link href="#link">Projects</Nav.Link>
+                    <Nav.Link as={Link} to='/'>Home</Nav.Link>
+                    <Nav.Link as={Link} to='/new-task'>New Task</Nav.Link>
+                    <Nav.Link as={Link} to='/new-project'>New Project</Nav.Link>
                     <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Reports</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
