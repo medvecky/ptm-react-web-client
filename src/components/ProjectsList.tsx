@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Row, Badge} from 'react-bootstrap';
+import {Container, Row, Badge, Button} from 'react-bootstrap';
 import {EditProjectDto} from "../edit-project.dto";
 import ProjectForm from "./ProjectForm";
 import {Project} from "../project.model";
@@ -23,6 +23,26 @@ const ProjectsList: React.FC<ProjectsListProps> = props => {
         >
             <Row>
                 <h4><Badge variant="info">PROJECTS</Badge></h4>
+            </Row>
+            <Row>
+                <Row>
+                    <Button
+                        style={{margin: '1px'}}
+                        variant="outline-info"
+                        size='sm'
+                        onClick={() => props.onChangeFilter('')}
+                    >
+                        Clear Filter
+                    </Button>
+                    <Button
+                        style={{margin: '1px'}}
+                        variant="outline-info"
+                        size='sm'
+                        onClick={() => props.onChangeFilter('-')}
+                    >
+                        Tasks without project
+                    </Button>
+                </Row>
             </Row>
                 {props.items
                     .map(project =>

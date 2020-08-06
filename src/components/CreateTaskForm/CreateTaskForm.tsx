@@ -1,6 +1,7 @@
 import React, {useRef} from 'react';
+import './CreateTask.css';
 import {Form, Button, Card} from 'react-bootstrap';
-import {CreateTaskDto} from "../create-task.dto";
+import {CreateTaskDto} from "../../create-task.dto";
 interface CreateTaskProps {
     onCreateTask: (createTaskDto: CreateTaskDto) => void;
 }
@@ -20,11 +21,7 @@ const CreateTaskForm: React.FC<CreateTaskProps> = props => {
     };
     return (
             <Card
-                style={{
-                    padding: '2%',
-                    margin: '5%',
-                    width: '50%'
-                }}
+                className='CreateTask'
                 border="info"
                 text="info"
             >

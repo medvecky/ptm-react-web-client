@@ -1,13 +1,13 @@
 import React, {useRef} from "react";
+import './EditTaskForm.css'
 import {Button, Card, Form} from "react-bootstrap";
-import {Task} from "../task.model";
-import {EditTaskDto} from "../edit-task.dto";
-import {TaskStatus} from "../task.status.enum";
+import {Task} from "../../task.model";
+import {EditTaskDto} from "../../edit-task.dto";
+import {TaskStatus} from "../../task.status.enum";
 
 interface EditTaskProps {
     task: Task;
     onSubmit: (editTaskDto: EditTaskDto) => void;
-    changeVisibility: () => void;
 }
 
 const EditTaskForm: React.FC<EditTaskProps> = (props) => {
@@ -25,15 +25,10 @@ const EditTaskForm: React.FC<EditTaskProps> = (props) => {
             projectId: projectRef.current!.value
         };
         props.onSubmit(editTaskDto);
-        props.changeVisibility();
     };
     return (
         <Card
-            style={{
-                width: '100%',
-                margin: '1%',
-                padding: '1%'
-            }}
+            className='EditTaskForm'
             border="info"
             text="info"
         >
@@ -56,7 +51,7 @@ const EditTaskForm: React.FC<EditTaskProps> = (props) => {
                 </Form.Group>
                 <Form.Group controlId="formStatus">
                     <Form.Label>Status</Form.Label>
-                    <Form.Control as="select" defaultValue="Choose..." ref={statusRef}>
+                    <Form.Control as="select" defaultValue={props.task.status} ref={statusRef}>
                         <option>Choose...</option>
                         <option>{TaskStatus.OPEN}</option>
                         <option>{TaskStatus.IN_PROGRESS}</option>

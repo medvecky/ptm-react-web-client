@@ -1,0 +1,11 @@
+.EditTaskForm {
+    width: 50%;
+    margin: 1%;
+    padding: 1%;
+}
+
+@media only screen and (max-width: 900px) {
+    .EditTaskForm {
+        width: 95%;
+    }
+}

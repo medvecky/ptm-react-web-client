@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Task} from "../../task.model";
 import {CreateTaskDto} from "../../create-task.dto";
 import {EditTaskDto} from "../../edit-task.dto";
-import CreateTaskForm from "../CreateTaskForm";
+import CreateTaskForm from "../CreateTaskForm/CreateTaskForm";
 import {updateProjectValues, updateTaskValues} from "./PtmContainerFunctions";
 import {TaskStatus} from "../../task.status.enum";
 import NavBar from "../NavBar";
@@ -10,8 +10,10 @@ import {Project} from "../../project.model";
 import {CreateProjectDto} from "../../create-project.dto";
 import {EditProjectDto} from "../../edit-project.dto";
 import ListsContainer from "../ListsContainer";
-import CreateProjectForm from "../CreateProjectForm";
+import CreateProjectForm from "../CreateProjectForm/CreateProjectForm";
 import {Route, withRouter} from "react-router";
+import EditTaskForm from "../EditTaskForm/EditTaskForm";
+import EditProjectForm from "../EditProjectForm/EditProjectForm";
 
 
 const PTMContainer: React.FC = (props) => {
@@ -105,14 +107,33 @@ const PTMContainer: React.FC = (props) => {
     );
 
     const editTask = (props: any) => {
-        console.log('editTask', props)
-        return (
-            <h1>Edit task</h1>
-        );
+        const task = tasks.find(task => task.id === props.match.params.id)
+        if(task) {
+            return (
+                <EditTaskForm task={task} onSubmit={editTaskHandler}/>
+            );
+        } else {
+            return (
+                <h4>Task with id: {props.match.params.id} not found</h4>
+            );
+        }
+    };
+
+    const editProject = (props: any) => {
+        console.log('editProject', props)
+        const project = projects.find(project => project.id === props.match.params.id)
+        if(project) {
+            return (
+               <EditProjectForm project={project} onSubmit={editProjectHandler} />
+            );
+        } else {
+            return (
+                <h4>Project with id: {props.match.params.id} not found</h4>
+            );
+        }
     };
 
 
-    console.log('PTMContainer',props);
     return (
         <div className='main'>
             <NavBar/>
@@ -120,6 +141,7 @@ const PTMContainer: React.FC = (props) => {
             <Route path="/new-task" exact component={createTask}/>
             <Route path="/new-project" exact component={createProject}/>
             <Route path="/task/:id" exact component={editTask} />
+            <Route path="/project/:id" exact component={editProject} />
         </div>
     );
 };

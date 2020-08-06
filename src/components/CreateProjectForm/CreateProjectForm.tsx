@@ -1,6 +1,7 @@
-import React, {useRef} from 'react';
+import React, {useRef} from 'react'
+import './CreateProjectForm.css'
 import {Form, Button, Card} from 'react-bootstrap';
-import {CreateProjectDto} from "../create-project.dto";
+import {CreateProjectDto} from "../../create-project.dto";
 interface CreateProjectProps {
     onCreateProject: (createProjectDto: CreateProjectDto) => void;
     onClearFilter: (filter: string) => void;
@@ -20,10 +21,7 @@ const CreateProjectForm: React.FC<CreateProjectProps> = props => {
     };
     return (
             <Card
-                style={{
-                    padding: '2%',
-                    width: '100%'
-                }}
+                className='CreateProjectForm'
                 border="info"
                 text="info"
             >

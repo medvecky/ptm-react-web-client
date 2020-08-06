@@ -42,6 +42,26 @@ $ npm run start
 by default service operable on 
 [http://localhost:3001](http://localhost:3001)
 
+### App deploy to GitHub Pages
+
+Change homepage property in packages.json to:
+ http://xxxxxx.github.io/ptm-react-web-client
+ 
+ where xxxxxx - your github profile name
+ 
+as example: 
+ 
+```
+ "homepage": "http://medvecky.github.io/ptm-react-web-client"
+```
+
+then run following commands: 
+
+```bash
+ npm run build 
+ npm run deploy
+```
+
 ### Available Scripts
 
 In the project directory, you can run:

@@ -1,13 +1,14 @@
 import React, {useRef} from "react";
 import {Button, Card, Form} from "react-bootstrap";
-import {Project} from "../project.model";
-import {EditProjectDto} from "../edit-project.dto";
+import {Project} from "../../project.model";
+import {EditProjectDto} from "../../edit-project.dto";
+import './EditProjectForm.css';
 
 interface EditProjectProps {
     project: Project;
     onSubmit: (editProjectDto: EditProjectDto) => void;
-    changeVisibility: () => void;
 }
+
 const EditProjectForm: React.FC<EditProjectProps> = (props) => {
     const titleRef = useRef<HTMLInputElement>(null);
     const descriptionRef = useRef<HTMLInputElement>(null);
@@ -19,15 +20,10 @@ const EditProjectForm: React.FC<EditProjectProps> = (props) => {
             description: descriptionRef.current!.value
         };
         props.onSubmit(editProjectDto);
-        props.changeVisibility();
     };
     return (
         <Card
-            style={{
-                width: '100%',
-                margin: '1%',
-                padding: '1%'
-            }}
+            className='EditProjectForm'
             border="info"
             text="info"
         >

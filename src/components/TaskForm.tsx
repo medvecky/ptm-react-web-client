@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {Card, Button} from "react-bootstrap";
-import EditTaskForm from "./EditTaskForm";
 import {EditTaskDto} from "../edit-task.dto";
 import {Task} from "../task.model";
 import {Link} from "react-router-dom";
+import EditTaskStatusForm from "./EditTaskStatusForm";
 
 interface TaskProps {
     task: Task;
@@ -19,7 +19,7 @@ const TaskForm: React.FC<TaskProps> = props => {
     };
 
     if (isEditable) {
-        displayForm = (<EditTaskForm task={props.task} onSubmit={props.onEditTask} changeVisibility={onEdit}/>);
+        displayForm = (<EditTaskStatusForm task={props.task} onSubmit={props.onEditTask} changeVisibility={onEdit}/>);
 
     } else {
         displayForm = (
@@ -28,16 +28,15 @@ const TaskForm: React.FC<TaskProps> = props => {
                 text="info"
             >
                 <Card.Body>
-                    <Card.Title>
-                        <Link style={{
+                    <Card.Title
+                        as={Link}
+                        to={'/task/' + props.task.id}
+                        key={props.task.id}
+                        style={{
                             color: "lightseagreen"
-
                         }}
-                            to={'/task/' + props.task.id}
-                            key={props.task.id}
-                        >
+                    >
                         {props.task.title}
-                        </Link>
                     </Card.Title>
                     <Card.Text>
                         {props.task.description}
@@ -67,7 +66,6 @@ const TaskForm: React.FC<TaskProps> = props => {
             </Card>
         );
     }
-
     return (
         <div style={{
             width: '100%',

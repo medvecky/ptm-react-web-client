@@ -1,12 +1,11 @@
 import React from "react";
 import {Col, Container, Row} from "react-bootstrap";
-import TasksList from "./TasksList";
+import TasksList from "./TasksList/TasksList";
 import ProjectsList from "./ProjectsList";
 import {Task} from "../task.model";
 import {EditTaskDto} from "../edit-task.dto";
 import {Project} from "../project.model";
 import {EditProjectDto} from "../edit-project.dto";
-import {RouteComponentProps, withRouter} from "react-router";
 
 type ListsContainerProps = {
     tasks: Task [];
