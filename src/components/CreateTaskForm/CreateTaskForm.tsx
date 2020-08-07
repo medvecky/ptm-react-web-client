@@ -2,6 +2,7 @@ import React, {useRef} from 'react';
 import './CreateTask.css';
 import {Form, Button, Card} from 'react-bootstrap';
 import {CreateTaskDto} from "../../create-task.dto";
+import {useHistory} from "react-router";
 interface CreateTaskProps {
     onCreateTask: (createTaskDto: CreateTaskDto) => void;
 }
@@ -10,6 +11,7 @@ const CreateTaskForm: React.FC<CreateTaskProps> = props => {
     const titleInputRef = useRef<HTMLInputElement>(null);
     const descriptionInputRef = useRef<HTMLInputElement>(null);
     const projectInputRef = useRef<HTMLInputElement>(null);
+    const history = useHistory();
     const createTaskHandler = (event: React.FormEvent) => {
         event.preventDefault();
         const createTaskDto: CreateTaskDto = {
@@ -18,6 +20,7 @@ const CreateTaskForm: React.FC<CreateTaskProps> = props => {
             projectId: projectInputRef.current!.value
         };
         props.onCreateTask(createTaskDto);
+        history.push('/');
     };
     return (
             <Card

@@ -1,24 +1,50 @@
 import React from 'react';
-import {Nav, Navbar, NavDropdown} from "react-bootstrap";
-import { Link } from 'react-router-dom';
+import {Button, Nav, Navbar, NavDropdown} from "react-bootstrap";
+import {NavLink, useHistory} from 'react-router-dom';
 
-const NavBar :React.FC = () => {
+interface  NavBarProps {
+    onSignOut: () => void
+}
+
+const NavBar: React.FC<NavBarProps> = (props) => {
+    const history = useHistory();
+
+    const signOutHandler = () => {
+        props.onSignOut();
+        history.push('/');
+    };
+
     return (
         <Navbar bg="info" variant='dark' expand='md'>
             <Navbar.Brand href="#home">PTM</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link as={Link} to='/'>Home</Nav.Link>
-                    <Nav.Link as={Link} to='/new-task'>New Task</Nav.Link>
-                    <Nav.Link as={Link} to='/new-project'>New Project</Nav.Link>
+                    <Nav.Link
+                        as={NavLink}
+                        to='/'
+                        exact
+                    >
+                        Home
+                    </Nav.Link>
+                    <Nav.Link as={NavLink} to='/new-task'>New Task</Nav.Link>
+                    <Nav.Link as={NavLink} to='/new-project'>New Project</Nav.Link>
                     <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Reports</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                        <NavDropdown.Divider />
+                        <NavDropdown.Divider/>
                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                     </NavDropdown>
+                </Nav>
+                <Nav>
+                    <Button
+                        variant="outline-light"
+                        type="submit" size='sm'
+                        onClick={signOutHandler}
+                    >
+                       Sign Out
+                    </Button>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

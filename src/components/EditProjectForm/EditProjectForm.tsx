@@ -3,6 +3,7 @@ import {Button, Card, Form} from "react-bootstrap";
 import {Project} from "../../project.model";
 import {EditProjectDto} from "../../edit-project.dto";
 import './EditProjectForm.css';
+import {useHistory} from "react-router";
 
 interface EditProjectProps {
     project: Project;
@@ -12,6 +13,7 @@ interface EditProjectProps {
 const EditProjectForm: React.FC<EditProjectProps> = (props) => {
     const titleRef = useRef<HTMLInputElement>(null);
     const descriptionRef = useRef<HTMLInputElement>(null);
+    const history = useHistory();
     const editProjectHandler = (event: React.FormEvent) => {
         event.preventDefault();
         const editProjectDto: EditProjectDto = {
@@ -20,6 +22,7 @@ const EditProjectForm: React.FC<EditProjectProps> = (props) => {
             description: descriptionRef.current!.value
         };
         props.onSubmit(editProjectDto);
+        history.push('/');
     };
     return (
         <Card

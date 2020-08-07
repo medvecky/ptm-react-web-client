@@ -11,15 +11,18 @@ import {CreateProjectDto} from "../../create-project.dto";
 import {EditProjectDto} from "../../edit-project.dto";
 import ListsContainer from "../ListsContainer";
 import CreateProjectForm from "../CreateProjectForm/CreateProjectForm";
-import {Route, withRouter} from "react-router";
+import {Redirect, Route, Switch, withRouter} from "react-router";
 import EditTaskForm from "../EditTaskForm/EditTaskForm";
 import EditProjectForm from "../EditProjectForm/EditProjectForm";
+import NavBarNoAuth from "../NavBarNoAuth";
+import SignInForm from "../SignInForm/SignInForm";
 
 
 const PTMContainer: React.FC = (props) => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [projects, setProjects] = useState<Project[]>([]);
     const [projectFilter, setProjectFilter] = useState<string>('');
+    const [token, setToken] = useState<string>('');
 
     const addTaskHandler = (createTaskDto: CreateTaskDto) => {
         setTasks(
@@ -85,6 +88,16 @@ const PTMContainer: React.FC = (props) => {
         });
     };
 
+    const signInHandler = (login: string, password: string) => {
+        if (login === 'admin' && password === 'admin') {
+            setToken('xxxx');
+        }
+    };
+
+    const signOutHandler = () => {
+        setToken('');
+    };
+
     const lists = () => (
         <ListsContainer
             tasks={tasks}
@@ -103,12 +116,12 @@ const PTMContainer: React.FC = (props) => {
     );
 
     const createProject = () => (
-        <CreateProjectForm onCreateProject={addProjectHandler} onClearFilter={setProjectFilter} />
+        <CreateProjectForm onCreateProject={addProjectHandler} onClearFilter={setProjectFilter}/>
     );
 
     const editTask = (props: any) => {
         const task = tasks.find(task => task.id === props.match.params.id)
-        if(task) {
+        if (task) {
             return (
                 <EditTaskForm task={task} onSubmit={editTaskHandler}/>
             );
@@ -122,9 +135,9 @@ const PTMContainer: React.FC = (props) => {
     const editProject = (props: any) => {
         console.log('editProject', props)
         const project = projects.find(project => project.id === props.match.params.id)
-        if(project) {
+        if (project) {
             return (
-               <EditProjectForm project={project} onSubmit={editProjectHandler} />
+                <EditProjectForm project={project} onSubmit={editProjectHandler}/>
             );
         } else {
             return (
@@ -133,16 +146,42 @@ const PTMContainer: React.FC = (props) => {
         }
     };
 
+    const signIn = (props: any) => (
+        <SignInForm onSingIn={signInHandler} />
+    );
+
+    let routes;
+
+    if (token) {
+        routes = (
+            <div className='main'>
+                <NavBar onSignOut={signOutHandler}/>
+                <Switch>
+                    <Route path="/" exact component={lists}/>
+                    <Route path="/new-task" exact component={createTask}/>
+                    <Route path="/new-project" exact component={createProject}/>
+                    <Route path="/task/:id" exact component={editTask}/>
+                    <Route path="/project/:id" exact component={editProject}/>
+                    <Redirect from="/" to="/"/>
+                    {/*<Route render={() => <h1>Not found</h1>}/>*/}
+                </Switch>
+            </div>
+        );
+    } else {
+        routes = (
+            <div className='main'>
+                <NavBarNoAuth/>
+                <Switch>
+                    <Route path="/signin" exact component={signIn}/>
+                    <Route path="/signup" exact component={signIn}/>
+                    <Redirect from="/" to="/signin"/>
+                </Switch>
+            </div>
+        );
+    }
 
     return (
-        <div className='main'>
-            <NavBar/>
-            <Route path="/" exact component={lists}/>
-            <Route path="/new-task" exact component={createTask}/>
-            <Route path="/new-project" exact component={createProject}/>
-            <Route path="/task/:id" exact component={editTask} />
-            <Route path="/project/:id" exact component={editProject} />
-        </div>
+        routes
     );
 };
 

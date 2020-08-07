@@ -2,6 +2,7 @@ import React, {useRef} from 'react'
 import './CreateProjectForm.css'
 import {Form, Button, Card} from 'react-bootstrap';
 import {CreateProjectDto} from "../../create-project.dto";
+import {useHistory} from "react-router";
 interface CreateProjectProps {
     onCreateProject: (createProjectDto: CreateProjectDto) => void;
     onClearFilter: (filter: string) => void;
@@ -10,6 +11,7 @@ interface CreateProjectProps {
 const CreateProjectForm: React.FC<CreateProjectProps> = props => {
     const titleInputRef = useRef<HTMLInputElement>(null);
     const descriptionInputRef = useRef<HTMLInputElement>(null);
+    const history = useHistory();
     const createProjectHandler = (event: React.FormEvent) => {
         event.preventDefault();
         const createProjectDto: CreateProjectDto = {
@@ -18,6 +20,7 @@ const CreateProjectForm: React.FC<CreateProjectProps> = props => {
             description: descriptionInputRef.current!.value,
         };
         props.onCreateProject(createProjectDto);
+        history.push('/');
     };
     return (
             <Card

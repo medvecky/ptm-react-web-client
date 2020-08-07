@@ -4,6 +4,7 @@ import {Button, Card, Form} from "react-bootstrap";
 import {Task} from "../../task.model";
 import {EditTaskDto} from "../../edit-task.dto";
 import {TaskStatus} from "../../task.status.enum";
+import {useHistory} from "react-router";
 
 interface EditTaskProps {
     task: Task;
@@ -15,6 +16,7 @@ const EditTaskForm: React.FC<EditTaskProps> = (props) => {
     const descriptionRef = useRef<HTMLInputElement>(null);
     const statusRef = useRef<HTMLSelectElement>(null);
     const projectRef = useRef<HTMLInputElement>(null);
+    const history = useHistory();
     const editTaskHandler = (event: React.FormEvent) => {
         event.preventDefault();
         const editTaskDto: EditTaskDto = {
@@ -25,6 +27,7 @@ const EditTaskForm: React.FC<EditTaskProps> = (props) => {
             projectId: projectRef.current!.value
         };
         props.onSubmit(editTaskDto);
+        history.push('/');
     };
     return (
         <Card
