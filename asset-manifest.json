@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/ptm-react-web-client/static/css/main.a8b74be8.chunk.css",
-    "main.js": "/ptm-react-web-client/static/js/main.c71d56a4.chunk.js",
-    "main.js.map": "/ptm-react-web-client/static/js/main.c71d56a4.chunk.js.map",
+    "main.css": "/ptm-react-web-client/static/css/main.b16afbc5.chunk.css",
+    "main.js": "/ptm-react-web-client/static/js/main.e67fd14c.chunk.js",
+    "main.js.map": "/ptm-react-web-client/static/js/main.e67fd14c.chunk.js.map",
     "runtime-main.js": "/ptm-react-web-client/static/js/runtime-main.ba240d7f.js",
     "runtime-main.js.map": "/ptm-react-web-client/static/js/runtime-main.ba240d7f.js.map",
     "static/css/2.af3c1da9.chunk.css": "/ptm-react-web-client/static/css/2.af3c1da9.chunk.css",
-    "static/js/2.fc233e2f.chunk.js": "/ptm-react-web-client/static/js/2.fc233e2f.chunk.js",
-    "static/js/2.fc233e2f.chunk.js.map": "/ptm-react-web-client/static/js/2.fc233e2f.chunk.js.map",
+    "static/js/2.266dc0c3.chunk.js": "/ptm-react-web-client/static/js/2.266dc0c3.chunk.js",
+    "static/js/2.266dc0c3.chunk.js.map": "/ptm-react-web-client/static/js/2.266dc0c3.chunk.js.map",
     "index.html": "/ptm-react-web-client/index.html",
-    "precache-manifest.dc9086045f9c576c4a12278d1972874b.js": "/ptm-react-web-client/precache-manifest.dc9086045f9c576c4a12278d1972874b.js",
+    "precache-manifest.b43600a83f617313d0089c70360f48c9.js": "/ptm-react-web-client/precache-manifest.b43600a83f617313d0089c70360f48c9.js",
     "service-worker.js": "/ptm-react-web-client/service-worker.js",
     "static/css/2.af3c1da9.chunk.css.map": "/ptm-react-web-client/static/css/2.af3c1da9.chunk.css.map",
-    "static/css/main.a8b74be8.chunk.css.map": "/ptm-react-web-client/static/css/main.a8b74be8.chunk.css.map",
-    "static/js/2.fc233e2f.chunk.js.LICENSE.txt": "/ptm-react-web-client/static/js/2.fc233e2f.chunk.js.LICENSE.txt"
+    "static/css/main.b16afbc5.chunk.css.map": "/ptm-react-web-client/static/css/main.b16afbc5.chunk.css.map",
+    "static/js/2.266dc0c3.chunk.js.LICENSE.txt": "/ptm-react-web-client/static/js/2.266dc0c3.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.ba240d7f.js",
     "static/css/2.af3c1da9.chunk.css",
-    "static/js/2.fc233e2f.chunk.js",
-    "static/css/main.a8b74be8.chunk.css",
-    "static/js/main.c71d56a4.chunk.js"
+    "static/js/2.266dc0c3.chunk.js",
+    "static/css/main.b16afbc5.chunk.css",
+    "static/js/main.e67fd14c.chunk.js"
   ]
 }
