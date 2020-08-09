@@ -16,13 +16,18 @@ import EditTaskForm from "../EditTaskForm/EditTaskForm";
 import EditProjectForm from "../EditProjectForm/EditProjectForm";
 import NavBarNoAuth from "../NavBarNoAuth";
 import SignInForm from "../SignInForm/SignInForm";
+import SignUpForm from "../SignUpForm/SignUpForm";
+import instance from '../../axios.config';
 
+const axios = instance;
 
 const PTMContainer: React.FC = (props) => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [projects, setProjects] = useState<Project[]>([]);
     const [projectFilter, setProjectFilter] = useState<string>('');
     const [token, setToken] = useState<string>('');
+    const [error, setError] = useState<string>('');
+    const [redirect, setRedirect] = useState<string>('/signin')
 
     const addTaskHandler = (createTaskDto: CreateTaskDto) => {
         setTasks(
@@ -88,10 +93,33 @@ const PTMContainer: React.FC = (props) => {
         });
     };
 
-    const signInHandler = (login: string, password: string) => {
-        if (login === 'admin' && password === 'admin') {
+    const signInHandler = (email: string, password: string) => {
+        if (email === 'admin@gmail.com' && password === 'admin') {
             setToken('xxxx');
         }
+    };
+
+    const signUpHandler = (email: string, password: string) => {
+        axios.post('/auth/signup', {
+            username: email,
+            password: password
+        })
+            .then(function (response) {
+                axios.post('/auth/signin', {
+                    username: email,
+                    password: password
+                })
+                    .then(function (response) {
+                        setToken(response.data.accessToken);
+                        setError('');
+                    })
+                    .catch(function (error) {
+                        setError(error.response.data.message.toString());
+                    });
+            })
+            .catch(function (error) {
+                // setError(error.response.data.message.toString());
+            });
     };
 
     const signOutHandler = () => {
@@ -147,7 +175,11 @@ const PTMContainer: React.FC = (props) => {
     };
 
     const signIn = (props: any) => (
-        <SignInForm onSingIn={signInHandler} />
+        <SignInForm onSingIn={signInHandler}/>
+    );
+
+    const signUp = (props: any) => (
+        <SignUpForm onSingUp={signUpHandler} error={error}/>
     );
 
     let routes;
@@ -173,8 +205,8 @@ const PTMContainer: React.FC = (props) => {
                 <NavBarNoAuth/>
                 <Switch>
                     <Route path="/signin" exact component={signIn}/>
-                    <Route path="/signup" exact component={signIn}/>
-                    <Redirect from="/" to="/signin"/>
+                    <Route path="/signup" exact component={signUp}/>
+                    <Redirect from="/" to={redirect}/>
                 </Switch>
             </div>
         );
