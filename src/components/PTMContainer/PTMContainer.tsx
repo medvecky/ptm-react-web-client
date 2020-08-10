@@ -4,14 +4,13 @@ import {CreateTaskDto} from "../../create-task.dto";
 import {EditTaskDto} from "../../edit-task.dto";
 import CreateTaskForm from "../CreateTaskForm/CreateTaskForm";
 import {updateProjectValues, updateTaskValues} from "./PtmContainerFunctions";
-import {TaskStatus} from "../../task.status.enum";
 import NavBar from "../NavBar";
 import {Project} from "../../project.model";
 import {CreateProjectDto} from "../../create-project.dto";
 import {EditProjectDto} from "../../edit-project.dto";
 import ListsContainer from "../ListsContainer";
 import CreateProjectForm from "../CreateProjectForm/CreateProjectForm";
-import {Redirect, Route, Switch, withRouter} from "react-router";
+import {Redirect, Route, Switch, useHistory, withRouter} from "react-router";
 import EditTaskForm from "../EditTaskForm/EditTaskForm";
 import EditProjectForm from "../EditProjectForm/EditProjectForm";
 import NavBarNoAuth from "../NavBarNoAuth";
@@ -27,21 +26,67 @@ const PTMContainer: React.FC = (props) => {
     const [projectFilter, setProjectFilter] = useState<string>('');
     const [token, setToken] = useState<string>('');
     const [error, setError] = useState<string>('');
-    const [redirect, setRedirect] = useState<string>('/signin')
+    const history = useHistory();
 
     const addTaskHandler = (createTaskDto: CreateTaskDto) => {
-        setTasks(
-            prevTasks =>
-                [...prevTasks,
-                    {
-                        id: Math.random().toString(),
-                        title: createTaskDto.title,
-                        description: createTaskDto.description,
-                        projectId: createTaskDto.projectId,
-                        status: TaskStatus.OPEN
-                    }
-                ]
-        );
+        if(createTaskDto.projectId) {
+            createTask(createTaskDto.title, createTaskDto.description);
+        } else {
+            createTaskWithProject(createTaskDto.title, createTaskDto.description, createTaskDto.projectId);
+        }
+    };
+
+
+    const createTask = (title: string, description: string) => {
+        axios.post('/tasks', {
+            title: title,
+            description: description
+        }, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        })
+            .then(function (response) {
+                setError('');
+                setTasks(
+                    prevTasks =>
+                        [...prevTasks,
+                           response.data
+                        ]
+                );
+                history.push('/');
+
+            })
+            .catch(function (error) {
+                setError(error.response.data);
+            });
+
+    };
+
+    const createTaskWithProject = (title: string, description: string, projectId: string) => {
+        axios.post('/tasks', {
+            title: title,
+            description: description,
+            projectId: projectId
+        }, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        })
+            .then(function (response) {
+                setError('');
+                setTasks(
+                    prevTasks =>
+                        [...prevTasks,
+                            response.data
+                        ]
+                );
+                history.push('/');
+
+            })
+            .catch(function (error) {
+                setError(error.response.data.message.toString());
+            });
     };
 
     const addProjectHandler = (createProjectDto: CreateProjectDto) => {
@@ -94,9 +139,17 @@ const PTMContainer: React.FC = (props) => {
     };
 
     const signInHandler = (email: string, password: string) => {
-        if (email === 'admin@gmail.com' && password === 'admin') {
-            setToken('xxxx');
-        }
+        axios.post('/auth/signin', {
+            username: email,
+            password: password
+        })
+            .then(function (response) {
+                setToken(response.data.accessToken);
+                setError('');
+            })
+            .catch(function (error) {
+                setError(error.response.data.message.toString());
+            });
     };
 
     const signUpHandler = (email: string, password: string) => {
@@ -118,7 +171,7 @@ const PTMContainer: React.FC = (props) => {
                     });
             })
             .catch(function (error) {
-                // setError(error.response.data.message.toString());
+                setError(error.response.data.message.toString());
             });
     };
 
@@ -139,15 +192,15 @@ const PTMContainer: React.FC = (props) => {
         />
     );
 
-    const createTask = () => (
-        <CreateTaskForm onCreateTask={addTaskHandler}/>
+    const createTaskForm = () => (
+        <CreateTaskForm onCreateTask={addTaskHandler} error={error}/>
     );
 
-    const createProject = () => (
+    const createProjectForm = () => (
         <CreateProjectForm onCreateProject={addProjectHandler} onClearFilter={setProjectFilter}/>
     );
 
-    const editTask = (props: any) => {
+    const editTaskForm = (props: any) => {
         const task = tasks.find(task => task.id === props.match.params.id)
         if (task) {
             return (
@@ -160,7 +213,7 @@ const PTMContainer: React.FC = (props) => {
         }
     };
 
-    const editProject = (props: any) => {
+    const editProjectForm = (props: any) => {
         console.log('editProject', props)
         const project = projects.find(project => project.id === props.match.params.id)
         if (project) {
@@ -174,11 +227,11 @@ const PTMContainer: React.FC = (props) => {
         }
     };
 
-    const signIn = (props: any) => (
-        <SignInForm onSingIn={signInHandler}/>
+    const signInForm = (props: any) => (
+        <SignInForm onSingIn={signInHandler} error={error}/>
     );
 
-    const signUp = (props: any) => (
+    const signUpForm = (props: any) => (
         <SignUpForm onSingUp={signUpHandler} error={error}/>
     );
 
@@ -190,12 +243,11 @@ const PTMContainer: React.FC = (props) => {
                 <NavBar onSignOut={signOutHandler}/>
                 <Switch>
                     <Route path="/" exact component={lists}/>
-                    <Route path="/new-task" exact component={createTask}/>
-                    <Route path="/new-project" exact component={createProject}/>
-                    <Route path="/task/:id" exact component={editTask}/>
-                    <Route path="/project/:id" exact component={editProject}/>
+                    <Route path="/new-task" exact component={createTaskForm}/>
+                    <Route path="/new-project" exact component={createProjectForm}/>
+                    <Route path="/task/:id" exact component={editTaskForm}/>
+                    <Route path="/project/:id" exact component={editProjectForm}/>
                     <Redirect from="/" to="/"/>
-                    {/*<Route render={() => <h1>Not found</h1>}/>*/}
                 </Switch>
             </div>
         );
@@ -204,9 +256,9 @@ const PTMContainer: React.FC = (props) => {
             <div className='main'>
                 <NavBarNoAuth/>
                 <Switch>
-                    <Route path="/signin" exact component={signIn}/>
-                    <Route path="/signup" exact component={signUp}/>
-                    <Redirect from="/" to={redirect}/>
+                    <Route path="/signin" exact component={signInForm}/>
+                    <Route path="/signup" exact component={signUpForm}/>
+                    <Redirect from="/" to='/signin'/>
                 </Switch>
             </div>
         );

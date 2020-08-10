@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import './SignUpForm.css';
-import {Form, Button, Card, Badge} from 'react-bootstrap';
+import {Form, Button, Card} from 'react-bootstrap';
 
 interface SignUpProps {
     onSingUp: (email: string, password: string) => void;
@@ -71,7 +71,9 @@ const SignUpForm: React.FC<SignUpProps> = props => {
                     <Form.Control type="password" placeholder="confirm password" ref={confirmPasswordInputRef}/>
                 </Form.Group>
                 <Form.Group controlId="error">
-                    <Badge variant="danger">{error || props.error}</Badge>
+                    <Card border='danger' text='danger'>
+                        <Card.Body>  {error || props.error} </Card.Body>
+                    </Card>
                 </Form.Group>
                 <Button variant="outline-info" type="submit" size='sm'>
                     Sign Up

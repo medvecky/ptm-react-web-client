@@ -1,8 +1,10 @@
 import React, {useRef} from 'react';
 import './SignInForm.css';
 import {Form, Button, Card} from 'react-bootstrap';
+
 interface SignInProps {
     onSingIn: (email: string, password: string) => void;
+    error: string;
 }
 
 const SignInForm: React.FC<SignInProps> = props => {
@@ -14,26 +16,66 @@ const SignInForm: React.FC<SignInProps> = props => {
         event.preventDefault();
         props.onSingIn(email, password);
     };
+
+    const form = (
+        <Card
+            className='CreateTask'
+            border="info"
+            text="info"
+        >
+            <Form onSubmit={signInHandler}>
+                <Form.Group controlId="formEmail">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="email" placeholder="Enter email" ref={emailInputRef}/>
+                </Form.Group>
+                <Form.Group controlId="formPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" placeholder="password" ref={passwordInputRef}/>
+                </Form.Group>
+                <Button variant="outline-info" type="submit" size='sm'>
+                    Sign In
+                </Button>
+            </Form>
+        </Card>
+    );
+
+    const formWithError = (
+        <Card
+            className='CreateTask'
+            border="info"
+            text="info"
+        >
+            <Form onSubmit={signInHandler}>
+                <Form.Group controlId="formEmail">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="email" placeholder="Enter email" ref={emailInputRef}/>
+                </Form.Group>
+                <Form.Group controlId="formPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" placeholder="password" ref={passwordInputRef}/>
+                </Form.Group>
+                <Form.Group controlId="error">
+                    <Card border='danger' text='danger'>
+                        <Card.Body>  {props.error} </Card.Body>
+                    </Card>
+                </Form.Group>
+                <Button variant="outline-info" type="submit" size='sm'>
+                    Sign In
+                </Button>
+            </Form>
+        </Card>
+    );
+
+    let resultForm;
+
+    if (props.error) {
+        resultForm = formWithError;
+    } else {
+        resultForm = form;
+    }
+
     return (
-            <Card
-                className='CreateTask'
-                border="info"
-                text="info"
-            >
-                <Form onSubmit={signInHandler}>
-                    <Form.Group controlId="formEmail">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control type="email"  placeholder="Enter email" ref={emailInputRef}/>
-                    </Form.Group>
-                    <Form.Group controlId="formPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="password"  ref={passwordInputRef}/>
-                    </Form.Group>
-                    <Button variant="outline-info" type="submit" size='sm'>
-                        Sign In
-                    </Button>
-                </Form>
-            </Card>
+        resultForm
     );
 };
 
