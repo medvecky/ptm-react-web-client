@@ -21,73 +21,37 @@ const CreateTaskForm: React.FC<CreateTaskProps> = props => {
         props.onCreateTask(createTaskDto);
     };
 
-    const form = (
-        <Card
-            className='CreateTask'
-            border="info"
-            text="info"
-        >
-            <Form onSubmit={createTaskHandler}>
-                <Form.Group controlId="formTitle">
-                    <Form.Label>Title</Form.Label>
-                    <Form.Control type="text" placeholder="Enter task's title" ref={titleInputRef}/>
-                </Form.Group>
-                <Form.Group controlId="formDescription">
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control type="text" placeholder="Enter task's description" ref={descriptionInputRef}/>
-                </Form.Group>
-                <Form.Group controlId="formProject">
-                    <Form.Label>Project</Form.Label>
-                    <Form.Control type="text" placeholder="Enter task's project" ref={projectInputRef}/>
-                </Form.Group>
-                <Button variant="outline-info" type="submit" size='sm'>
-                    Create task
-                </Button>
-            </Form>
-        </Card>
-    );
-
-    const formWithError = (
-        <Card
-            className='CreateTask'
-            border="info"
-            text="info"
-        >
-            <Form onSubmit={createTaskHandler}>
-                <Form.Group controlId="formTitle">
-                    <Form.Label>Title</Form.Label>
-                    <Form.Control type="text" placeholder="Enter task's title" ref={titleInputRef}/>
-                </Form.Group>
-                <Form.Group controlId="formDescription">
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control type="text" placeholder="Enter task's description" ref={descriptionInputRef}/>
-                </Form.Group>
-                <Form.Group controlId="formProject">
-                    <Form.Label>Project</Form.Label>
-                    <Form.Control type="text" placeholder="Enter task's project" ref={projectInputRef}/>
-                </Form.Group>
-                <Form.Group controlId="error">
-                    <Card border='danger' text='danger'>
-                        <Card.Body>  {props.error} </Card.Body>
-                    </Card>
-                </Form.Group>
-                <Button variant="outline-info" type="submit" size='sm'>
-                    Create task
-                </Button>
-            </Form>
-        </Card>
-    );
-
-    let resultForm;
-
-    if(props.error) {
-        resultForm = formWithError;
-    } else {
-        resultForm = form;
-    }
-
     return (
-      resultForm
+        <Card
+            className='CreateTask'
+            border="info"
+            text="info"
+        >
+            <Form onSubmit={createTaskHandler}>
+                <Form.Group controlId="formTitle">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control type="text" placeholder="Enter task's title" ref={titleInputRef}/>
+                </Form.Group>
+                <Form.Group controlId="formDescription">
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control type="text" placeholder="Enter task's description" ref={descriptionInputRef}/>
+                </Form.Group>
+                <Form.Group controlId="formProject">
+                    <Form.Label>Project</Form.Label>
+                    <Form.Control type="text" placeholder="Enter task's project" ref={projectInputRef}/>
+                </Form.Group>
+                { props.error &&
+                    <Form.Group controlId="error">
+                        <Card border='danger' text='danger'>
+                            <Card.Body>  {props.error} </Card.Body>
+                        </Card>
+                    </Form.Group>
+                }
+                <Button variant="outline-info" type="submit" size='sm'>
+                    Create task
+                </Button>
+            </Form>
+        </Card>
     );
 };
 

@@ -8,7 +8,7 @@ import EditTaskStatusForm from "./EditTaskStatusForm";
 interface TaskProps {
     task: Task;
     onDeleteTask: (taskId: string) => void;
-    onEditTask: (editTaskDto: EditTaskDto) => void;
+    onChangeTaskStatus: (editTaskDto: EditTaskDto) => void;
 }
 
 const TaskForm: React.FC<TaskProps> = props => {
@@ -19,7 +19,12 @@ const TaskForm: React.FC<TaskProps> = props => {
     };
 
     if (isEditable) {
-        displayForm = (<EditTaskStatusForm task={props.task} onSubmit={props.onEditTask} changeVisibility={onEdit}/>);
+        displayForm = (
+            <EditTaskStatusForm
+                task={props.task}
+                onSubmit={props.onChangeTaskStatus}
+                changeVisibility={onEdit}
+            />);
 
     } else {
         displayForm = (
@@ -47,13 +52,23 @@ const TaskForm: React.FC<TaskProps> = props => {
                     <Card.Text>
                         {props.task.status}
                     </Card.Text>
+                    { props.task.beginDate &&
+                    <Card.Text>
+                        Begin: {props.task.beginDate}
+                    </Card.Text>
+                    }
+                    { props.task.endDate &&
+                    <Card.Text>
+                        End: {props.task.endDate}
+                    </Card.Text>
+                    }
                     <Button
                         style={{margin: '1%'}}
                         variant="outline-info"
                         onClick={() => onEdit()}
                         size='sm'
                     >
-                        Edit
+                        Change Status
                     </Button>
                     <Button
                         variant="outline-info"

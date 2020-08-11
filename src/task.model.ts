@@ -6,4 +6,6 @@ export interface Task {
     description: string;
     status: TaskStatus;
     projectId: string;
+    beginDate: string;
+    endDate: string;
 }

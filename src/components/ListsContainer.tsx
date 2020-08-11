@@ -1,5 +1,5 @@
 import React from "react";
-import {Col, Container, Row} from "react-bootstrap";
+import {Card, Col, Container, Row} from "react-bootstrap";
 import TasksList from "./TasksList/TasksList";
 import ProjectsList from "./ProjectsList";
 import {Task} from "../task.model";
@@ -11,11 +11,12 @@ type ListsContainerProps = {
     tasks: Task [];
     projects: Project [];
     deleteTaskHandler: (taskId: string) => void;
-    editTaskHandler: (editTaskDto: EditTaskDto) => void;
+    changeTaskStatusHandler: (editTaskDto: EditTaskDto) => void;
     projectFilter: string;
     deleteProjectHandler: (projectId: string) => void;
     setProjectFilter: (project: string) => void;
     editProjectHandler: (editProjectDto: EditProjectDto) => void;
+    error: string;
 }
 
 const ListsContainer: React.FC<ListsContainerProps> = (props) => {
@@ -26,13 +27,20 @@ const ListsContainer: React.FC<ListsContainerProps> = (props) => {
                 maxWidth: '100%'
             }}
         >
+            {props.error &&
+                <Row>
+                    <Card border='danger' text='danger'>
+                        <Card.Body>  {props.error} </Card.Body>
+                    </Card>
+                </Row>
+            }
             <Row>
                 <Col xs={10} sm={3} lg={3}>
                     <TasksList
                         status='OPEN'
                         items={props.tasks}
                         onDeleteTask={props.deleteTaskHandler}
-                        onEditTask={props.editTaskHandler}
+                        onChangeTaskStatus={props.changeTaskStatusHandler}
                         project={props.projectFilter}
                     />
                 </Col>
@@ -41,7 +49,7 @@ const ListsContainer: React.FC<ListsContainerProps> = (props) => {
                         status='IN_PROGRESS'
                         items={props.tasks}
                         onDeleteTask={props.deleteTaskHandler}
-                        onEditTask={props.editTaskHandler}
+                        onChangeTaskStatus={props.changeTaskStatusHandler}
                         project={props.projectFilter}
                     />
                 </Col>
@@ -50,7 +58,7 @@ const ListsContainer: React.FC<ListsContainerProps> = (props) => {
                         status='DONE'
                         items={props.tasks}
                         onDeleteTask={props.deleteTaskHandler}
-                        onEditTask={props.editTaskHandler}
+                        onChangeTaskStatus={props.changeTaskStatusHandler}
                         project={props.projectFilter}
                     />
                 </Col>

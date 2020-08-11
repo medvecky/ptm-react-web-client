@@ -3,7 +3,6 @@ import './EditTaskForm.css'
 import {Button, Card, Form} from "react-bootstrap";
 import {Task} from "../../task.model";
 import {EditTaskDto} from "../../edit-task.dto";
-import {TaskStatus} from "../../task.status.enum";
 import {useHistory} from "react-router";
 
 interface EditTaskProps {
@@ -14,7 +13,6 @@ interface EditTaskProps {
 const EditTaskForm: React.FC<EditTaskProps> = (props) => {
     const titleRef = useRef<HTMLInputElement>(null);
     const descriptionRef = useRef<HTMLInputElement>(null);
-    const statusRef = useRef<HTMLSelectElement>(null);
     const projectRef = useRef<HTMLInputElement>(null);
     const history = useHistory();
     const editTaskHandler = (event: React.FormEvent) => {
@@ -23,7 +21,7 @@ const EditTaskForm: React.FC<EditTaskProps> = (props) => {
             id: props.task.id,
             title: titleRef.current!.value,
             description: descriptionRef.current!.value,
-            status: statusRef.current!.value,
+            status: props.task.status,
             projectId: projectRef.current!.value
         };
         props.onSubmit(editTaskDto);
@@ -53,13 +51,7 @@ const EditTaskForm: React.FC<EditTaskProps> = (props) => {
                         ref={descriptionRef}/>
                 </Form.Group>
                 <Form.Group controlId="formStatus">
-                    <Form.Label>Status</Form.Label>
-                    <Form.Control as="select" defaultValue={props.task.status} ref={statusRef}>
-                        <option>Choose...</option>
-                        <option>{TaskStatus.OPEN}</option>
-                        <option>{TaskStatus.IN_PROGRESS}</option>
-                        <option>{TaskStatus.DONE}</option>
-                    </Form.Control>
+                    <Form.Label>{props.task.status}</Form.Label>
                 </Form.Group>
                 <Form.Group controlId="formProject">
                     <Form.Label>Project</Form.Label>

@@ -8,7 +8,7 @@ interface TasksListProps {
     // @ts-ignore
     items: Task [];
     onDeleteTask: (taskId: string) => void;
-    onEditTask: (editTaskDto: EditTaskDto) => void;
+    onChangeTaskStatus: (editTaskDto: EditTaskDto) => void;
     status: string;
     project: string;
 }
@@ -21,7 +21,11 @@ const TasksList: React.FC<TasksListProps> = props => {
 
     const taskListElements = taskListItems.map(task =>
         <Row>
-            <TaskForm task={task} onDeleteTask={props.onDeleteTask} onEditTask={props.onEditTask}/>
+            <TaskForm
+                task={task}
+                onDeleteTask={props.onDeleteTask}
+                onChangeTaskStatus={props.onChangeTaskStatus}
+            />
         </Row>);
 
     return (

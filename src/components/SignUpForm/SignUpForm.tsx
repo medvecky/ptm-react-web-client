@@ -25,7 +25,7 @@ const SignUpForm: React.FC<SignUpProps> = props => {
         }
     };
 
-    const form = (
+    return (
         <Card
             className='CreateTask'
             border="info"
@@ -44,57 +44,18 @@ const SignUpForm: React.FC<SignUpProps> = props => {
                     <Form.Label>Confirm password</Form.Label>
                     <Form.Control type="password" placeholder="confirm password" ref={confirmPasswordInputRef}/>
                 </Form.Group>
-                <Button variant="outline-info" type="submit" size='sm'>
-                    Sign In
-                </Button>
-            </Form>
-        </Card>
-    );
-
-    const formWithError = (
-        <Card
-            className='CreateTask'
-            border="info"
-            text="info"
-        >
-            <Form onSubmit={signUpHandler}>
-                <Form.Group controlId="formEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" ref={emailInputRef}/>
-                </Form.Group>
-                <Form.Group controlId="formPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="password" ref={passwordInputRef}/>
-                </Form.Group>
-                <Form.Group controlId="formConfirmPassword">
-                    <Form.Label>Confirm password</Form.Label>
-                    <Form.Control type="password" placeholder="confirm password" ref={confirmPasswordInputRef}/>
-                </Form.Group>
-                <Form.Group controlId="error">
-                    <Card border='danger' text='danger'>
-                        <Card.Body>  {error || props.error} </Card.Body>
-                    </Card>
-                </Form.Group>
+                { (error || props.error) &&
+                    <Form.Group controlId="error">
+                        <Card border='danger' text='danger'>
+                            <Card.Body>  {error || props.error} </Card.Body>
+                        </Card>
+                    </Form.Group>
+                }
                 <Button variant="outline-info" type="submit" size='sm'>
                     Sign Up
                 </Button>
             </Form>
         </Card>
-    );
-
-    let resultForm;
-
-    if (error) {
-        resultForm = formWithError;
-    } else if (props.error) {
-        resultForm = formWithError;
-    } else {
-        resultForm = form;
-    }
-
-
-    return (
-        resultForm
     );
 };
 
