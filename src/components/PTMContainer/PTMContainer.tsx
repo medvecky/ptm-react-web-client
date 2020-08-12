@@ -238,7 +238,11 @@ const PTMContainer: React.FC = (props) => {
                     setError('');
                 })
                 .catch(function (error) {
-                    setError(error.response.data.message.toString());
+                    if (error.response.data.message) {
+                        setError(error.response.data.message.toString());
+                    } else {
+                        setError( error.toString());
+                    }
                 });
         };
 
