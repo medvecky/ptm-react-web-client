@@ -8,6 +8,7 @@ interface EditTaskStatusProps {
     task: Task;
     onSubmit: (editTaskDto: EditTaskDto) => void;
     changeVisibility: () => void;
+    projectName: string;
 }
 
 const EditTaskStatusForm: React.FC<EditTaskStatusProps> = (props) => {
@@ -42,7 +43,7 @@ const EditTaskStatusForm: React.FC<EditTaskStatusProps> = (props) => {
                     <Form.Label>{props.task.description}</Form.Label>
                 </Form.Group>
                 <Form.Group>
-                    <Form.Label>{props.task.projectId}</Form.Label>
+                    <Form.Label>{props.projectName}</Form.Label>
                 </Form.Group>
                 <Form.Group controlId="formStatus">
                     <Form.Control as="select" defaultValue={props.task.status} ref={statusRef}>

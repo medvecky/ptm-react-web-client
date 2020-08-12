@@ -19,7 +19,7 @@ const ProjectForm: React.FC<ProjectProps> = props => {
         >
             <Card.Body>
                 <Card.Title
-                    onClick={() => props.onChangeFilter(props.project.title)}
+                    onClick={() => props.onChangeFilter(props.project.id)}
                 >
                     {props.project.title}
                 </Card.Title>

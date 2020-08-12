@@ -2,15 +2,17 @@ import React, {useRef} from 'react';
 import './CreateTask.css';
 import {Form, Button, Card} from 'react-bootstrap';
 import {CreateTaskDto} from "../../create-task.dto";
+import {Project} from "../../project.model";
 interface CreateTaskProps {
     onCreateTask: (createTaskDto: CreateTaskDto) => void;
     error: string;
+    projects: Project [];
 }
 
 const CreateTaskForm: React.FC<CreateTaskProps> = props => {
     const titleInputRef = useRef<HTMLInputElement>(null);
     const descriptionInputRef = useRef<HTMLInputElement>(null);
-    const projectInputRef = useRef<HTMLInputElement>(null);
+    const projectInputRef = useRef<HTMLSelectElement>(null);
     const createTaskHandler = (event: React.FormEvent) => {
         event.preventDefault();
         const createTaskDto: CreateTaskDto = {
@@ -20,6 +22,10 @@ const CreateTaskForm: React.FC<CreateTaskProps> = props => {
         };
         props.onCreateTask(createTaskDto);
     };
+
+    const selectProjectFormControl = props.projects.map(project =>
+        <option value={project.id}>{project.title}</option>
+    );
 
     return (
         <Card
@@ -38,7 +44,10 @@ const CreateTaskForm: React.FC<CreateTaskProps> = props => {
                 </Form.Group>
                 <Form.Group controlId="formProject">
                     <Form.Label>Project</Form.Label>
-                    <Form.Control type="text" placeholder="Enter task's project" ref={projectInputRef}/>
+                    <Form.Control as="select" custom ref={projectInputRef}>
+                        <option value = ''>none</option>
+                        {selectProjectFormControl}
+                    </Form.Control>
                 </Form.Group>
                 { props.error &&
                     <Form.Group controlId="error">

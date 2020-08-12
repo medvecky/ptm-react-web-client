@@ -8,7 +8,7 @@ export function filterTasks(tasks: Task [], projectFilter: string, statusFilter:
         if (projectFilter === '-') {
             result = tasks
                 .filter(task => task.status === statusFilter)
-                .filter(task => task.projectId === "");
+                .filter(task => task.projectId === undefined);
         } else {
             result = tasks
                 .filter(task => task.status === statusFilter)

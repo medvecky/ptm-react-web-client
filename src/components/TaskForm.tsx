@@ -9,6 +9,7 @@ interface TaskProps {
     task: Task;
     onDeleteTask: (taskId: string) => void;
     onChangeTaskStatus: (editTaskDto: EditTaskDto) => void;
+    projectName: string;
 }
 
 const TaskForm: React.FC<TaskProps> = props => {
@@ -24,6 +25,7 @@ const TaskForm: React.FC<TaskProps> = props => {
                 task={props.task}
                 onSubmit={props.onChangeTaskStatus}
                 changeVisibility={onEdit}
+                projectName={props.projectName}
             />);
 
     } else {
@@ -47,7 +49,7 @@ const TaskForm: React.FC<TaskProps> = props => {
                         {props.task.description}
                     </Card.Text>
                     <Card.Text>
-                        {props.task.projectId}
+                        {props.projectName}
                     </Card.Text>
                     <Card.Text>
                         {props.task.status}

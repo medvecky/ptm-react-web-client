@@ -38,7 +38,8 @@ const ListsContainer: React.FC<ListsContainerProps> = (props) => {
                 <Col xs={10} sm={3} lg={3}>
                     <TasksList
                         status='OPEN'
-                        items={props.tasks}
+                        tasks={props.tasks}
+                        projects={props.projects}
                         onDeleteTask={props.deleteTaskHandler}
                         onChangeTaskStatus={props.changeTaskStatusHandler}
                         project={props.projectFilter}
@@ -47,7 +48,8 @@ const ListsContainer: React.FC<ListsContainerProps> = (props) => {
                 <Col xs={10} sm={3} lg={3}>
                     <TasksList
                         status='IN_PROGRESS'
-                        items={props.tasks}
+                        tasks={props.tasks}
+                        projects={props.projects}
                         onDeleteTask={props.deleteTaskHandler}
                         onChangeTaskStatus={props.changeTaskStatusHandler}
                         project={props.projectFilter}
@@ -56,7 +58,8 @@ const ListsContainer: React.FC<ListsContainerProps> = (props) => {
                 <Col xs={10} sm={3} lg={3}>
                     <TasksList
                         status='DONE'
-                        items={props.tasks}
+                        tasks={props.tasks}
+                        projects={props.projects}
                         onDeleteTask={props.deleteTaskHandler}
                         onChangeTaskStatus={props.changeTaskStatusHandler}
                         project={props.projectFilter}

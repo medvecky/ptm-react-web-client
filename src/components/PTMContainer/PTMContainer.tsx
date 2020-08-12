@@ -3,7 +3,6 @@ import {Task} from "../../task.model";
 import {CreateTaskDto} from "../../create-task.dto";
 import {EditTaskDto} from "../../edit-task.dto";
 import CreateTaskForm from "../CreateTaskForm/CreateTaskForm";
-import {updateProjectValues} from "./PtmContainerFunctions";
 import NavBar from "../NavBar";
 import {Project} from "../../project.model";
 import {CreateProjectDto} from "../../create-project.dto";
@@ -37,7 +36,21 @@ const PTMContainer: React.FC = (props) => {
                     }
                 })
                     .then(function (response) {
+                        setError('');
                         setTasks(response.data);
+                    })
+                    .catch(function (error) {
+                        setError(error.toString());
+                    });
+
+                axios.get('/projects', {
+                    headers: {
+                        Authorization: 'Bearer ' + token
+                    }
+                })
+                    .then(function (response) {
+                        setError('');
+                        setProjects(response.data);
                     })
                     .catch(function (error) {
                         setError(error.toString());
@@ -48,9 +61,9 @@ const PTMContainer: React.FC = (props) => {
 
         const addTaskHandler = (createTaskDto: CreateTaskDto) => {
             if (createTaskDto.projectId) {
-                createTask(createTaskDto.title, createTaskDto.description);
-            } else {
                 createTaskWithProject(createTaskDto.title, createTaskDto.description, createTaskDto.projectId);
+            } else {
+                createTask(createTaskDto.title, createTaskDto.description);
             }
         };
 
@@ -104,16 +117,22 @@ const PTMContainer: React.FC = (props) => {
         };
 
         const addProjectHandler = (createProjectDto: CreateProjectDto) => {
-            setProjects(
-                prevProjects =>
-                    [...prevProjects,
-                        {
-                            id: Math.random().toString(),
-                            title: createProjectDto.title,
-                            description: createProjectDto.description
-                        }
-                    ]
-            );
+            axios.post('/projects', {
+                title: createProjectDto.title,
+                description: createProjectDto.description
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            })
+                .then(function (response) {
+                    setError('');
+                    setChangeFlag(prevState => !prevState);
+                    history.push('/');
+                })
+                .catch(function (error) {
+                    setError(error.response.data.message.toString());
+                });
         };
 
         const editTaskHandler = (editTaskDto: EditTaskDto) => {
@@ -129,6 +148,7 @@ const PTMContainer: React.FC = (props) => {
                     }
                 })
                 .then(function (response) {
+                    setError('');
                     setChangeFlag(prevState => !prevState);
                 })
                 .catch(function (error) {
@@ -147,6 +167,7 @@ const PTMContainer: React.FC = (props) => {
                     }
                 })
                 .then(function (response) {
+                    setError('');
                     setChangeFlag(prevState => !prevState);
                 })
                 .catch(function (error) {
@@ -156,15 +177,25 @@ const PTMContainer: React.FC = (props) => {
 
 
         const editProjectHandler = (editProjectDto: EditProjectDto) => {
-            const projectIndex = projects.findIndex(project => project.id === editProjectDto.id);
-
-            const project: Project = {...projects[projectIndex]};
-            updateProjectValues(editProjectDto, project);
-
-            const newProjects = [...projects];
-            newProjects[projectIndex] = project;
-
-            setProjects(newProjects);
+            axios.patch(
+                `/projects/${editProjectDto.id}`,
+                {
+                    title: editProjectDto.title,
+                    description: editProjectDto.description
+                },
+                {
+                    headers: {
+                        Authorization: 'Bearer ' + token
+                    }
+                })
+                .then(function (response) {
+                    setError('');
+                    setChangeFlag(prevState => !prevState);
+                    history.push('/');
+                })
+                .catch(function (error) {
+                    setError(error.toString());
+                });
         }
 
         const deleteTaskHandler = (taskId: string) => {
@@ -174,6 +205,7 @@ const PTMContainer: React.FC = (props) => {
                 }
             })
                 .then(function (response) {
+                    setError('');
                     setChangeFlag(prevState => !prevState);
                 })
                 .catch(function (error) {
@@ -182,9 +214,18 @@ const PTMContainer: React.FC = (props) => {
         };
 
         const deleteProjectHandler = (projectId: string) => {
-            setProjects(prevProjects => {
-                return prevProjects.filter(project => project.id !== projectId);
-            });
+            axios.delete(`/projects/${projectId}`, {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            })
+                .then(function (response) {
+                    setError('');
+                    setChangeFlag(prevState => !prevState);
+                })
+                .catch(function (error) {
+                    setError(error.toString());
+                });
         };
 
         const signInHandler = (email: string, password: string) => {
@@ -243,11 +284,11 @@ const PTMContainer: React.FC = (props) => {
         );
 
         const createTaskForm = () => (
-            <CreateTaskForm onCreateTask={addTaskHandler} error={error}/>
+            <CreateTaskForm onCreateTask={addTaskHandler} error={error} projects={projects}/>
         );
 
         const createProjectForm = () => (
-            <CreateProjectForm onCreateProject={addProjectHandler} onClearFilter={setProjectFilter}/>
+            <CreateProjectForm onCreateProject={addProjectHandler} onClearFilter={setProjectFilter} error={error}/>
         );
 
         const editTaskForm = (props: any) => {
