@@ -1,46 +1,52 @@
 import React, {useRef} from "react";
-import './EditTaskForm.css'
+import './EditTaskProjectForm.css'
 import {Button, Card, Form} from "react-bootstrap";
 import {Task} from "../../task.model";
-import {EditTaskDto} from "../../edit-task.dto";
-import {useHistory} from "react-router";
 import {Project} from "../../project.model";
 
-interface EditTaskProps {
+interface EditTaskProjectProps {
     task: Task;
-    onSubmit: (editTaskDto: EditTaskDto) => void;
+    onEditTaskProject: (taskId: string, projectId: string) => void;
+    onDeleteTaskProject: (taskId: string) => void;
     projects: Project [];
     error: string;
 }
 
-const EditTaskForm: React.FC<EditTaskProps> = (props) => {
+const EditTaskProjectForm: React.FC<EditTaskProjectProps> = (props) => {
     const titleRef = useRef<HTMLInputElement>(null);
     const descriptionRef = useRef<HTMLInputElement>(null);
-    const history = useHistory();
+    const projectInputRef = useRef<HTMLSelectElement>(null);
 
-    const project = props.projects.find(project => project.id === props.task.projectId);
+    const selectProjectFormControl = props.projects.map(project => {
 
-    const projectName = project?.title || '';
+            if (project.id === props.task.projectId) {
+                return (
+                    <option value={project.id} selected>{project.title}</option>
+                );
+            } else {
+                return (
+                    <option value={project.id}>{project.title}</option>
+                );
+            }
+        }
+    );
 
-    const editTaskHandler = (event: React.FormEvent) => {
+    const editTaskProjectHandler = (event: React.FormEvent) => {
         event.preventDefault();
-        const editTaskDto: EditTaskDto = {
-            id: props.task.id,
-            title: titleRef.current!.value,
-            description: descriptionRef.current!.value,
-            status: props.task.status,
-            projectId: props.task.projectId
-        };
-        props.onSubmit(editTaskDto);
-        history.push('/');
+        if(projectInputRef.current!.value) {
+            const projectId = projectInputRef.current!.value;
+            props.onEditTaskProject(props.task.id, projectId);
+        } else {
+            props.onDeleteTaskProject(props.task.id);
+        }
     };
     return (
         <Card
-            className='EditTaskForm'
+            className='EditTaskProjectForm'
             border="info"
             text="info"
         >
-            <Form onSubmit={editTaskHandler}>
+            <Form onSubmit={editTaskProjectHandler}>
                 <Form.Group controlId="formTitle">
                     <Form.Label>Title</Form.Label>
                     <Form.Control
@@ -61,7 +67,10 @@ const EditTaskForm: React.FC<EditTaskProps> = (props) => {
                     <Form.Label>{props.task.status}</Form.Label>
                 </Form.Group>
                 <Form.Group controlId="formProject">
-                    <Form.Label>{projectName}</Form.Label>
+                    <Form.Control as="select" custom ref={projectInputRef}>
+                        <option value=''>none</option>
+                        {selectProjectFormControl}
+                    </Form.Control>
                 </Form.Group>
                 {props.error &&
                 <Form.Group controlId="error">
@@ -78,4 +87,4 @@ const EditTaskForm: React.FC<EditTaskProps> = (props) => {
     );
 };
 
-export default EditTaskForm;
+export default EditTaskProjectForm;

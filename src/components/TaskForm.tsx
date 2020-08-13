@@ -48,18 +48,40 @@ const TaskForm: React.FC<TaskProps> = props => {
                     <Card.Text>
                         {props.task.description}
                     </Card.Text>
-                    <Card.Text>
+                    {props.task.projectId &&
+                    <Card.Text
+                        as={Link}
+                        to={`/task/${props.task.id}/project`}
+                        key={props.task.id}
+                        style={{
+                            color: "lightseagreen"
+                        }}
+                    >
                         {props.projectName}
                     </Card.Text>
+                    }
+
+                    { !props.task.projectId &&
+                    <Card.Text
+                        as={Link}
+                        to={`/task/${props.task.id}/project`}
+                        key={props.task.id}
+                        style={{
+                            color: "lightseagreen"
+                        }}
+                    >
+                        Add Project
+                    </Card.Text>
+                    }
                     <Card.Text>
                         {props.task.status}
                     </Card.Text>
-                    { props.task.beginDate &&
+                    {props.task.beginDate &&
                     <Card.Text>
                         Begin: {props.task.beginDate}
                     </Card.Text>
                     }
-                    { props.task.endDate &&
+                    {props.task.endDate &&
                     <Card.Text>
                         End: {props.task.endDate}
                     </Card.Text>
