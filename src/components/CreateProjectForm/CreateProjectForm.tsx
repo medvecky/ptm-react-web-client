@@ -29,7 +29,7 @@ const CreateProjectForm: React.FC<CreateProjectProps> = props => {
                 <Form onSubmit={createProjectHandler}>
                     <Form.Group controlId="formTitle">
                         <Form.Label>Title</Form.Label>
-                        <Form.Control type="text" placeholder="Enter project's title" ref={titleInputRef}/>
+                        <Form.Control type="text" placeholder="Enter project's title" required ref={titleInputRef}/>
                     </Form.Group>
                     <Form.Group controlId="formDescription">
                         <Form.Label>Description</Form.Label>

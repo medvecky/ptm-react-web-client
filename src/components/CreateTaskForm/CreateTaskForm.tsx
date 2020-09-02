@@ -36,11 +36,11 @@ const CreateTaskForm: React.FC<CreateTaskProps> = props => {
             <Form onSubmit={createTaskHandler}>
                 <Form.Group controlId="formTitle">
                     <Form.Label>Title</Form.Label>
-                    <Form.Control type="text" placeholder="Enter task's title" ref={titleInputRef}/>
+                    <Form.Control type="text" placeholder="Enter task's title" required ref={titleInputRef}/>
                 </Form.Group>
                 <Form.Group controlId="formDescription">
                     <Form.Label>Description</Form.Label>
-                    <Form.Control type="text" placeholder="Enter task's description" ref={descriptionInputRef}/>
+                    <Form.Control type="text" placeholder="Enter task's description" required ref={descriptionInputRef}/>
                 </Form.Group>
                 <Form.Group controlId="formProject">
                     <Form.Label>Project</Form.Label>

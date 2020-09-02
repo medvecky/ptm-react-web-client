@@ -91,8 +91,8 @@ const PTMContainer: React.FC = (props) => {
 
             })
             .catch(function (error) {
-                if (error.response.data) {
-                    setError(error.response.data.toString());
+                if (error.response.data.message) {
+                    setError(error.response.data.message.toString());
                 } else {
                     setError(error.toString());
                 }
@@ -163,9 +163,14 @@ const PTMContainer: React.FC = (props) => {
             .then(function (response) {
                 setError('');
                 setChangeFlag(prevState => !prevState);
+                history.push('/');
             })
             .catch(function (error) {
-                setError(error.toString());
+                if (error.response.data.message) {
+                    setError(error.response.data.message.toString());
+                } else {
+                    setError(error.toString());
+                }
             });
     }
 
@@ -184,7 +189,11 @@ const PTMContainer: React.FC = (props) => {
                 setChangeFlag(prevState => !prevState);
             })
             .catch(function (error) {
-                setError(error.toString());
+                if (error.response.data.message) {
+                    setError(error.response.data.message.toString());
+                } else {
+                    setError(error.toString());
+                }
             })
     }
 
@@ -205,7 +214,11 @@ const PTMContainer: React.FC = (props) => {
                 history.push('/');
             })
             .catch(function (error) {
-                setError(error.toString());
+                if (error.response.data.message) {
+                    setError(error.response.data.message.toString());
+                } else {
+                    setError(error.toString());
+                }
             });
     }
 
@@ -224,7 +237,11 @@ const PTMContainer: React.FC = (props) => {
                 history.push('/');
             })
             .catch(function (error) {
-                setError(error.toString());
+                if (error.response.data.message) {
+                    setError(error.response.data.message.toString());
+                } else {
+                    setError(error.toString());
+                }
             });
     }
 
@@ -246,7 +263,11 @@ const PTMContainer: React.FC = (props) => {
                 history.push('/');
             })
             .catch(function (error) {
-                setError(error.toString());
+                if (error.response.data.message) {
+                    setError(error.response.data.message.toString());
+                } else {
+                    setError(error.toString());
+                }
             });
     }
 
@@ -276,7 +297,11 @@ const PTMContainer: React.FC = (props) => {
                 setChangeFlag(prevState => !prevState);
             })
             .catch(function (error) {
-                setError(error.toString());
+                if (error.response.data.message) {
+                    setError(error.response.data.message.toString());
+                } else {
+                    setError(error.toString());
+                }
             });
 
         axios.delete(`/projects/${projectId}`, {
@@ -289,7 +314,11 @@ const PTMContainer: React.FC = (props) => {
                 setChangeFlag(prevState => !prevState);
             })
             .catch(function (error) {
-                setError(error.toString());
+                if (error.response.data.message) {
+                    setError(error.response.data.message.toString());
+                } else {
+                    setError(error.toString());
+                }
             });
     };
 

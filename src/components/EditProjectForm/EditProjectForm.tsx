@@ -45,6 +45,13 @@ const EditProjectForm: React.FC<EditProjectProps> = (props) => {
                         defaultValue={props.project.description}
                         ref={descriptionRef}/>
                 </Form.Group>
+                {props.error &&
+                <Form.Group controlId="error">
+                    <Card border='danger' text='danger'>
+                        <Card.Body>  {props.error} </Card.Body>
+                    </Card>
+                </Form.Group>
+                }
                 <Button variant="outline-info" type="submit" size='sm'>
                     Save changes
                 </Button>

@@ -34,15 +34,15 @@ const SignUpForm: React.FC<SignUpProps> = props => {
             <Form onSubmit={signUpHandler}>
                 <Form.Group controlId="formEmail">
                     <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" ref={emailInputRef}/>
+                    <Form.Control type="email" placeholder="Enter email" required ref={emailInputRef}/>
                 </Form.Group>
                 <Form.Group controlId="formPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="password" ref={passwordInputRef}/>
+                    <Form.Control type="password" placeholder="password" required ref={passwordInputRef}/>
                 </Form.Group>
                 <Form.Group controlId="formConfirmPassword">
                     <Form.Label>Confirm password</Form.Label>
-                    <Form.Control type="password" placeholder="confirm password" ref={confirmPasswordInputRef}/>
+                    <Form.Control type="password" placeholder="confirm password" required ref={confirmPasswordInputRef} />
                 </Form.Group>
                 { (error || props.error) &&
                     <Form.Group controlId="error">

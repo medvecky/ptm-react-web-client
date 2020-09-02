@@ -26,11 +26,11 @@ const SignInForm: React.FC<SignInProps> = props => {
             <Form onSubmit={signInHandler}>
                 <Form.Group controlId="formEmail">
                     <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" ref={emailInputRef}/>
+                    <Form.Control type="email" placeholder="Enter email" required ref={emailInputRef}/>
                 </Form.Group>
                 <Form.Group controlId="formPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="password" ref={passwordInputRef}/>
+                    <Form.Control type="password" placeholder="password" required ref={passwordInputRef}/>
                 </Form.Group>
                 { props.error &&
                     <Form.Group controlId="error">

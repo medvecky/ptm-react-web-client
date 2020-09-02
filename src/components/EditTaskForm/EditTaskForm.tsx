@@ -3,7 +3,6 @@ import './EditTaskForm.css'
 import {Button, Card, Form} from "react-bootstrap";
 import {Task} from "../../task.model";
 import {EditTaskDto} from "../../edit-task.dto";
-import {useHistory} from "react-router";
 import {Project} from "../../project.model";
 
 interface EditTaskProps {
@@ -16,7 +15,6 @@ interface EditTaskProps {
 const EditTaskForm: React.FC<EditTaskProps> = (props) => {
     const titleRef = useRef<HTMLInputElement>(null);
     const descriptionRef = useRef<HTMLInputElement>(null);
-    const history = useHistory();
 
     const project = props.projects.find(project => project.id === props.task.projectId);
 
@@ -32,7 +30,6 @@ const EditTaskForm: React.FC<EditTaskProps> = (props) => {
             projectId: props.task.projectId
         };
         props.onSubmit(editTaskDto);
-        history.push('/');
     };
     return (
         <Card
