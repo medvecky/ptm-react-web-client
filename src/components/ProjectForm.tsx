@@ -3,15 +3,17 @@ import {Card, Button} from "react-bootstrap";
 import {Project} from "../project.model";
 import {EditProjectDto} from "../edit-project.dto";
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {setProjectsFilter} from '../store/projectsSlice'
 
 interface ProjectProps {
     project: Project;
     onDeleteProject: (projectId: string) => void;
     onEditProject: (editProjectDto: EditProjectDto) => void;
-    onChangeFilter: (filter: string) => void;
 }
 
 const ProjectForm: React.FC<ProjectProps> = props => {
+    const dispatch = useDispatch();
     return (
         <Card
             border="info"
@@ -19,7 +21,7 @@ const ProjectForm: React.FC<ProjectProps> = props => {
         >
             <Card.Body>
                 <Card.Title
-                    onClick={() => props.onChangeFilter(props.project.id)}
+                    onClick={() => dispatch(setProjectsFilter(props.project.id))}
                 >
                     {props.project.title}
                 </Card.Title>
@@ -29,7 +31,6 @@ const ProjectForm: React.FC<ProjectProps> = props => {
                 <Button
                     as={Link}
                     to={'/project/' + props.project.id}
-                    key = {props.project.id}
                     variant="outline-info"
                     size='sm'
                 >

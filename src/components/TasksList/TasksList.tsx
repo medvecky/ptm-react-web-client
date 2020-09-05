@@ -5,6 +5,8 @@ import {Container, Row, Badge} from 'react-bootstrap';
 import {Task} from "../../task.model";
 import {filterTasks} from "./TaskListFunction";
 import {Project} from "../../project.model";
+import {useSelector} from 'react-redux';
+import {selectProjectsFilter} from "../../store/projectsSlice";
 
 interface TasksListProps {
     // @ts-ignore
@@ -13,13 +15,14 @@ interface TasksListProps {
     onDeleteTask: (taskId: string) => void;
     onChangeTaskStatus: (editTaskDto: EditTaskDto) => void;
     status: string;
-    project: string;
 }
 
 
 const TasksList: React.FC<TasksListProps> = props => {
 
-    const taskListItems = filterTasks(props.tasks, props.project, props.status);
+    const project = useSelector(selectProjectsFilter);
+
+    const taskListItems = filterTasks(props.tasks, project, props.status);
 
     const taskListElements = taskListItems.map(task => {
 
@@ -27,7 +30,7 @@ const TasksList: React.FC<TasksListProps> = props => {
 
         const projectName = project?.title || '';
 
-        return (<Row>
+        return (<Row key={task.id}>
             <TaskForm
                 task={task}
                 onDeleteTask={props.onDeleteTask}

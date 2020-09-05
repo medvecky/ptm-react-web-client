@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from "react";
-import {Task} from "../../task.model";
+import React, {useEffect} from "react";
 import {CreateTaskDto} from "../../create-task.dto";
 import {EditTaskDto} from "../../edit-task.dto";
 import CreateTaskForm from "../CreateTaskForm/CreateTaskForm";
 import NavBar from "../NavBar";
-import {Project} from "../../project.model";
 import {CreateProjectDto} from "../../create-project.dto";
 import {EditProjectDto} from "../../edit-project.dto";
 import ListsContainer from "../ListsContainer";
@@ -17,17 +15,31 @@ import SignInForm from "../SignInForm/SignInForm";
 import SignUpForm from "../SignUpForm/SignUpForm";
 import instance from '../../axios.config';
 import EditTaskProjectForm from "../EditTaskProjectForm/EditTaskProjectForm";
+import {useSelector, useDispatch} from 'react-redux';
+import {
+    selectSystemError,
+    selectSystemToken,
+    setError,
+    clearError,
+    setToken,
+    clearToken,
+    setChangedFlag,
+    selectSystemIsChanged
+} from '../../store/systemSlice';
+
+import {selectTasksTasks, setTasks} from '../../store/tasksSlice';
+import {selectProjectsProjects, setProjects} from '../../store/projectsSlice';
 
 const axios = instance;
 
 const PTMContainer: React.FC = (props) => {
-    const [tasks, setTasks] = useState<Task[]>([]);
-    const [projects, setProjects] = useState<Project[]>([]);
-    const [projectFilter, setProjectFilter] = useState<string>('');
-    const [token, setToken] = useState<string>('');
-    const [error, setError] = useState<string>('');
-    const [changeFlag, setChangeFlag] = useState<boolean>(false);
     const history = useHistory();
+    const token = useSelector(selectSystemToken);
+    const changeFlag = useSelector(selectSystemIsChanged);
+    const systemError = useSelector(selectSystemError);
+    const tasks = useSelector(selectTasksTasks);
+    const projects = useSelector(selectProjectsProjects);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (token) {
@@ -37,11 +49,11 @@ const PTMContainer: React.FC = (props) => {
                 }
             })
                 .then(function (response) {
-                    setError('');
-                    setTasks(response.data);
+                    dispatch(clearError());
+                    dispatch(setTasks(response.data));
                 })
                 .catch(function (error) {
-                    setError(error.toString());
+                    dispatch(setError(error.toString()));
                 });
 
             axios.get('/projects', {
@@ -50,14 +62,14 @@ const PTMContainer: React.FC = (props) => {
                 }
             })
                 .then(function (response) {
-                    setError('');
-                    setProjects(response.data);
+                    dispatch(clearError());
+                    dispatch(setProjects(response.data));
                 })
                 .catch(function (error) {
-                    setError(error.toString());
+                    dispatch(setError(error.toString()));
                 });
         }
-    }, [changeFlag, token]);
+    }, [changeFlag, token, dispatch]);
 
 
     const addTaskHandler = (createTaskDto: CreateTaskDto) => {
@@ -79,22 +91,16 @@ const PTMContainer: React.FC = (props) => {
             }
         })
             .then(function (response) {
-                setError('');
-                setTasks(
-                    prevTasks =>
-                        [...prevTasks,
-                            response.data
-                        ]
-                );
-                setChangeFlag(prevState => !prevState);
+                dispatch(clearError());
+                dispatch(setChangedFlag());
                 history.push('/');
 
             })
             .catch(function (error) {
                 if (error.response.data.message) {
-                    setError(error.response.data.message.toString());
+                    dispatch(setError(error.response.data.message.toString()));
                 } else {
-                    setError(error.toString());
+                    dispatch(setError(error.toString()));
                 }
             });
 
@@ -111,16 +117,16 @@ const PTMContainer: React.FC = (props) => {
             }
         })
             .then(function (response) {
-                setError('');
-                setChangeFlag(prevState => !prevState);
+                dispatch(clearError());
+                dispatch(setChangedFlag());
                 history.push('/');
 
             })
             .catch(function (error) {
                 if (error.response.data.message) {
-                    setError(error.response.data.message.toString());
+                    dispatch(setError(error.response.data.message.toString()));
                 } else {
-                    setError(error.toString());
+                    dispatch(setError(error.toString()));
                 }
             });
     };
@@ -135,15 +141,15 @@ const PTMContainer: React.FC = (props) => {
             }
         })
             .then(function (response) {
-                setError('');
-                setChangeFlag(prevState => !prevState);
+                dispatch(clearError());
+                dispatch(setChangedFlag());
                 history.push('/');
             })
             .catch(function (error) {
                 if (error.response.data.message) {
-                    setError(error.response.data.message.toString());
+                    dispatch(setError(error.response.data.message.toString()));
                 } else {
-                    setError(error.toString());
+                    dispatch(setError(error.toString()));
                 }
             });
     };
@@ -161,15 +167,15 @@ const PTMContainer: React.FC = (props) => {
                 }
             })
             .then(function (response) {
-                setError('');
-                setChangeFlag(prevState => !prevState);
+                dispatch(clearError());
+                dispatch(setChangedFlag());
                 history.push('/');
             })
             .catch(function (error) {
                 if (error.response.data.message) {
-                    setError(error.response.data.message.toString());
+                    dispatch(setError(error.response.data.message.toString()));
                 } else {
-                    setError(error.toString());
+                    dispatch(setError(error.toString()));
                 }
             });
     }
@@ -185,14 +191,14 @@ const PTMContainer: React.FC = (props) => {
                 }
             })
             .then(function (response) {
-                setError('');
-                setChangeFlag(prevState => !prevState);
+                dispatch(clearError());
+                dispatch(setChangedFlag());
             })
             .catch(function (error) {
                 if (error.response.data.message) {
-                    setError(error.response.data.message.toString());
+                    dispatch(setError(error.response.data.message.toString()));
                 } else {
-                    setError(error.toString());
+                    dispatch(setError(error.toString()));
                 }
             })
     }
@@ -209,15 +215,15 @@ const PTMContainer: React.FC = (props) => {
                 }
             })
             .then(function (response) {
-                setError('');
-                setChangeFlag(prevState => !prevState);
+                dispatch(clearError());
+                dispatch(setChangedFlag());
                 history.push('/');
             })
             .catch(function (error) {
                 if (error.response.data.message) {
-                    setError(error.response.data.message.toString());
+                    dispatch(setError(error.response.data.message.toString()));
                 } else {
-                    setError(error.toString());
+                    dispatch(setError(error.toString()));
                 }
             });
     }
@@ -232,15 +238,15 @@ const PTMContainer: React.FC = (props) => {
                 }
             })
             .then(function (response) {
-                setError('');
-                setChangeFlag(prevState => !prevState);
+                dispatch(clearError());
+                dispatch(setChangedFlag());
                 history.push('/');
             })
             .catch(function (error) {
                 if (error.response.data.message) {
-                    setError(error.response.data.message.toString());
+                    dispatch(setError(error.response.data.message.toString()));
                 } else {
-                    setError(error.toString());
+                    dispatch(setError(error.toString()));
                 }
             });
     }
@@ -258,15 +264,15 @@ const PTMContainer: React.FC = (props) => {
                 }
             })
             .then(function (response) {
-                setError('');
-                setChangeFlag(prevState => !prevState);
+                dispatch(clearError());
+                dispatch(setChangedFlag());
                 history.push('/');
             })
             .catch(function (error) {
                 if (error.response.data.message) {
-                    setError(error.response.data.message.toString());
+                    dispatch(setError(error.response.data.message.toString()));
                 } else {
-                    setError(error.toString());
+                    dispatch(setError(error.toString()));
                 }
             });
     }
@@ -278,11 +284,11 @@ const PTMContainer: React.FC = (props) => {
             }
         })
             .then(function (response) {
-                setError('');
-                setChangeFlag(prevState => !prevState);
+                dispatch(clearError());
+                dispatch(setChangedFlag());
             })
             .catch(function (error) {
-                setError(error.toString());
+                dispatch(setError(error.toString()));
             });
     };
 
@@ -293,14 +299,14 @@ const PTMContainer: React.FC = (props) => {
             }
         })
             .then(function (response) {
-                setError('');
-                setChangeFlag(prevState => !prevState);
+                dispatch(clearError());
+                dispatch(setChangedFlag());
             })
             .catch(function (error) {
                 if (error.response.data.message) {
-                    setError(error.response.data.message.toString());
+                    dispatch(setError(error.response.data.message.toString()));
                 } else {
-                    setError(error.toString());
+                    dispatch(setError(error.toString()));
                 }
             });
 
@@ -310,14 +316,14 @@ const PTMContainer: React.FC = (props) => {
             }
         })
             .then(function (response) {
-                setError('');
-                setChangeFlag(prevState => !prevState);
+                dispatch(clearError());
+                dispatch(setChangedFlag());
             })
             .catch(function (error) {
                 if (error.response.data.message) {
-                    setError(error.response.data.message.toString());
+                    dispatch(setError(error.response.data.message.toString()));
                 } else {
-                    setError(error.toString());
+                    dispatch(setError(error.toString()));
                 }
             });
     };
@@ -328,14 +334,14 @@ const PTMContainer: React.FC = (props) => {
             password: password
         })
             .then(function (response) {
-                setToken(response.data.accessToken);
-                setError('');
+                dispatch(setToken(response.data.accessToken));
+                dispatch(clearError());
             })
             .catch(function (error) {
                 if (error.response.data.message) {
-                    setError(error.response.data.message.toString());
+                    dispatch(setError(error.response.data.message.toString()));
                 } else {
-                    setError(error.toString());
+                    dispatch(setError(error.toString()));
                 }
             });
     };
@@ -351,57 +357,56 @@ const PTMContainer: React.FC = (props) => {
                     password: password
                 })
                     .then(function (response) {
-                        setToken(response.data.accessToken);
-                        setError('');
+                        dispatch(setToken(response.data.accessToken));
+                        dispatch(clearError());
                     })
                     .catch(function (error) {
                         if (error.response.data.message) {
-                            setError(error.response.data.message.toString());
+                            dispatch(setError(error.response.data.message.toString()));
                         } else {
-                            setError(error.toString());
+                            dispatch(setError(error.toString()));
                         }
                     });
             })
             .catch(function (error) {
                 if (error.response.data.message) {
-                    setError(error.response.data.message.toString());
+                    dispatch(setError(error.response.data.message.toString()));
                 } else {
-                    setError(error.toString());
+                    dispatch(setError(error.toString()));
                 }
             });
     };
 
     const signOutHandler = () => {
-        setToken('');
+        dispatch(clearToken());
     };
 
     const lists = () => (
         <ListsContainer
             tasks={tasks}
             projects={projects}
-            projectFilter={projectFilter}
             deleteTaskHandler={deleteTaskHandler}
             changeTaskStatusHandler={changeTaskStatusHandler}
             deleteProjectHandler={deleteProjectHandler}
             editProjectHandler={editProjectHandler}
-            setProjectFilter={setProjectFilter}
-            error={error}
+            error={systemError}
         />
     );
 
     const createTaskForm = () => (
-        <CreateTaskForm onCreateTask={addTaskHandler} error={error} projects={projects}/>
+        <CreateTaskForm onCreateTask={addTaskHandler} error={systemError} projects={projects}/>
     );
 
     const createProjectForm = () => (
-        <CreateProjectForm onCreateProject={addProjectHandler} onClearFilter={setProjectFilter} error={error}/>
+        <CreateProjectForm onCreateProject={addProjectHandler} error={systemError}/>
     );
 
     const editTaskForm = (props: any) => {
+        // @ts-ignore
         const task = tasks.find(task => task.id === props.match.params.id)
         if (task) {
             return (
-                <EditTaskForm task={task} projects={projects} onSubmit={editTaskHandler} error={error}/>
+                <EditTaskForm task={task} projects={projects} onSubmit={editTaskHandler} error={systemError}/>
             );
         } else {
             return (
@@ -411,6 +416,7 @@ const PTMContainer: React.FC = (props) => {
     };
 
     const editTaskProjectForm = (props: any) => {
+        // @ts-ignore
         const task = tasks.find(task => task.id === props.match.params.id)
         if (task) {
             return (
@@ -419,7 +425,8 @@ const PTMContainer: React.FC = (props) => {
                     projects={projects}
                     onEditTaskProject={editTaskProjectHandler}
                     onDeleteTaskProject={deleteTaskProjectHandler}
-                    error={error}
+                    error={systemError
+                    }
                 />
             );
         } else {
@@ -430,11 +437,11 @@ const PTMContainer: React.FC = (props) => {
     };
 
     const editProjectForm = (props: any) => {
-        console.log('editProject', props)
+        // @ts-ignore
         const project = projects.find(project => project.id === props.match.params.id)
         if (project) {
             return (
-                <EditProjectForm project={project} onSubmit={editProjectHandler} error={error}/>
+                <EditProjectForm project={project} onSubmit={editProjectHandler} error={systemError}/>
             );
         } else {
             return (
@@ -444,11 +451,11 @@ const PTMContainer: React.FC = (props) => {
     };
 
     const signInForm = (props: any) => (
-        <SignInForm onSingIn={signInHandler} error={error}/>
+        <SignInForm onSingIn={signInHandler} error={systemError}/>
     );
 
     const signUpForm = (props: any) => (
-        <SignUpForm onSingUp={signUpHandler} error={error}/>
+        <SignUpForm onSingUp={signUpHandler} error={systemError}/>
     );
 
     let routes;

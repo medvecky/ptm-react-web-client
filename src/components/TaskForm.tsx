@@ -38,7 +38,6 @@ const TaskForm: React.FC<TaskProps> = props => {
                     <Card.Title
                         as={Link}
                         to={'/task/' + props.task.id}
-                        key={props.task.id}
                         style={{
                             color: "lightseagreen"
                         }}
@@ -52,7 +51,6 @@ const TaskForm: React.FC<TaskProps> = props => {
                     <Card.Text
                         as={Link}
                         to={`/task/${props.task.id}/project`}
-                        key={props.task.id}
                         style={{
                             color: "lightseagreen"
                         }}
@@ -65,7 +63,6 @@ const TaskForm: React.FC<TaskProps> = props => {
                     <Card.Text
                         as={Link}
                         to={`/task/${props.task.id}/project`}
-                        key={props.task.id}
                         style={{
                             color: "lightseagreen"
                         }}
