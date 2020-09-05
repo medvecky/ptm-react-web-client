@@ -18,28 +18,29 @@ import EditTaskProjectForm from "../EditTaskProjectForm/EditTaskProjectForm";
 import {useSelector, useDispatch} from 'react-redux';
 import {
     selectSystemError,
-    selectSystemToken,
     setError,
     clearError,
-    setToken,
-    clearToken,
     setChangedFlag,
     selectSystemIsChanged
 } from '../../store/systemSlice';
 
 import {selectTasksTasks, setTasks} from '../../store/tasksSlice';
 import {selectProjectsProjects, setProjects} from '../../store/projectsSlice';
+import {removeTokenFromStorage, saveTokenToStorage} from "./PTMContainerFunctions";
 
 const axios = instance;
 
 const PTMContainer: React.FC = (props) => {
     const history = useHistory();
-    const token = useSelector(selectSystemToken);
+    const token = localStorage.getItem('token');
+    // @ts-ignore
+    const expiresDate = new Date(localStorage.getItem('expirationDate'));
     const changeFlag = useSelector(selectSystemIsChanged);
     const systemError = useSelector(selectSystemError);
     const tasks = useSelector(selectTasksTasks);
     const projects = useSelector(selectProjectsProjects);
     const dispatch = useDispatch();
+
 
     useEffect(() => {
         if (token) {
@@ -334,7 +335,12 @@ const PTMContainer: React.FC = (props) => {
             password: password
         })
             .then(function (response) {
-                dispatch(setToken(response.data.accessToken));
+                saveTokenToStorage(response.data.accessToken);
+                setTimeout(() => {
+                    removeTokenFromStorage();
+                    dispatch(setChangedFlag());
+                }, 3600 * 1000);
+                dispatch(setChangedFlag());
                 dispatch(clearError());
             })
             .catch(function (error) {
@@ -357,7 +363,9 @@ const PTMContainer: React.FC = (props) => {
                     password: password
                 })
                     .then(function (response) {
-                        dispatch(setToken(response.data.accessToken));
+                        saveTokenToStorage(response.data.accessToken);
+                        // dispatch(setToken(response.data.accessToken));
+                        dispatch(setChangedFlag());
                         dispatch(clearError());
                     })
                     .catch(function (error) {
@@ -378,7 +386,8 @@ const PTMContainer: React.FC = (props) => {
     };
 
     const signOutHandler = () => {
-        dispatch(clearToken());
+        // dispatch(clearToken());
+        removeTokenFromStorage();
     };
 
     const lists = () => (
@@ -460,7 +469,9 @@ const PTMContainer: React.FC = (props) => {
 
     let routes;
 
-    if (token) {
+    console.log('Token ',token );
+
+    if (token && expiresDate > new Date()) {
         routes = (
             <div className='main'>
                 <NavBar onSignOut={signOutHandler}/>

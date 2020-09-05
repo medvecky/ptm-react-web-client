@@ -5,20 +5,11 @@ export const systemSlice = createSlice(
         name: 'system',
         initialState: {
             error: "",
-            token: "",
             isChangedFlag: false
         },
         reducers: {
             clearError: state => {
                 state.error = '';
-            },
-
-            clearToken: state => {
-                state.token = '';
-            },
-
-            setToken: (state, action) => {
-                state.token = action.payload;
             },
 
             setError: (state, action) => {
@@ -32,12 +23,10 @@ export const systemSlice = createSlice(
     }
 );
 
-export const {clearError, setError, clearToken, setToken, setChangedFlag} = systemSlice.actions;
+export const {clearError, setError, setChangedFlag} = systemSlice.actions;
 
 // @ts-ignore
 export const selectSystemError = state => state.system.error;
-// @ts-ignore
-export const selectSystemToken = state => state.system.token;
 
 // @ts-ignore
 export const selectSystemIsChanged = state => state.system.isChangedFlag;
