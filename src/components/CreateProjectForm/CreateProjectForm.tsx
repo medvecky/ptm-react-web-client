@@ -4,7 +4,6 @@ import {Form, Button, Card} from 'react-bootstrap';
 import {CreateProjectDto} from "../../create-project.dto";
 interface CreateProjectProps {
     onCreateProject: (createProjectDto: CreateProjectDto) => void;
-    onClearFilter: (filter: string) => void;
     error: string;
 }
 

@@ -12,9 +12,7 @@ type ListsContainerProps = {
     projects: Project [];
     deleteTaskHandler: (taskId: string) => void;
     changeTaskStatusHandler: (editTaskDto: EditTaskDto) => void;
-    projectFilter: string;
     deleteProjectHandler: (projectId: string) => void;
-    setProjectFilter: (project: string) => void;
     editProjectHandler: (editProjectDto: EditProjectDto) => void;
     error: string;
 }
@@ -42,7 +40,6 @@ const ListsContainer: React.FC<ListsContainerProps> = (props) => {
                         projects={props.projects}
                         onDeleteTask={props.deleteTaskHandler}
                         onChangeTaskStatus={props.changeTaskStatusHandler}
-                        project={props.projectFilter}
                     />
                 </Col>
                 <Col xs={10} sm={3} lg={3}>
@@ -52,7 +49,6 @@ const ListsContainer: React.FC<ListsContainerProps> = (props) => {
                         projects={props.projects}
                         onDeleteTask={props.deleteTaskHandler}
                         onChangeTaskStatus={props.changeTaskStatusHandler}
-                        project={props.projectFilter}
                     />
                 </Col>
                 <Col xs={10} sm={3} lg={3}>
@@ -62,7 +58,6 @@ const ListsContainer: React.FC<ListsContainerProps> = (props) => {
                         projects={props.projects}
                         onDeleteTask={props.deleteTaskHandler}
                         onChangeTaskStatus={props.changeTaskStatusHandler}
-                        project={props.projectFilter}
                     />
                 </Col>
                 <Col xs={10} sm={3} lg={3}>
@@ -70,7 +65,6 @@ const ListsContainer: React.FC<ListsContainerProps> = (props) => {
                         items={props.projects}
                         onDeleteProject={props.deleteProjectHandler}
                         onEditProject={props.editProjectHandler}
-                        onChangeFilter={props.setProjectFilter}
                     />
                 </Col>
             </Row>
