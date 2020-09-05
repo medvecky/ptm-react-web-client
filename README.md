@@ -1,7 +1,7 @@
 ## Description
 ### Personal Task Management System
 
-app demo on github pages: [PTM App](https://medvecky.github.io/ptm-react-web-client/)
+app demo: [PTM App](http://http://13.49.0.113/)
 
 React based web client for: 
 
