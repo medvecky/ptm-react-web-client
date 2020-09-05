@@ -1,7 +1,7 @@
 ## Description
 ### Personal Task Management System
 
-app demo: [PTM App](http://http://13.49.0.113/)
+app demo: [PTM App](http://13.49.0.113/)
 
 React based web client for: 
 
