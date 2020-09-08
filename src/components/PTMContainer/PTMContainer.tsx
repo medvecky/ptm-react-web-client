@@ -460,7 +460,7 @@ const PTMContainer: React.FC = (props) => {
     };
 
     const signInForm = (props: any) => (
-        <SignInForm onSingIn={signInHandler} error={systemError}/>
+        <SignInForm onSignIn={signInHandler} error={systemError}/>
     );
 
     const signUpForm = (props: any) => (
