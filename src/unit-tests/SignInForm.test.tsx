@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 
 import {configure, shallow, ShallowWrapper} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -8,6 +8,14 @@ import {Form, Button, Card} from 'react-bootstrap';
 
 configure({adapter: new Adapter()});
 
+jest.mock('react', () => {
+    const originReact = jest.requireActual('react');
+    const mUseRef = jest.fn();
+    return {
+        ...originReact,
+        useRef: mUseRef,
+    };
+});
 
 describe('<SignInForm />', () => {
 
@@ -65,7 +73,9 @@ describe('<SignInForm />', () => {
     });
 
     it('should call sign in handler function', () => {
-        const useRefSpy = jest.spyOn(React, 'useRef').mockReturnValue({ current: { value: 'Test' } });
+        const mRef = { current: { value: "test_form_value" } };
+        // @ts-ignore
+        useRef.mockReturnValue(mRef);
         const signInMock = jest.fn();
         wrapper.setProps({onSignIn: signInMock});
         // @ts-ignore
@@ -83,9 +93,8 @@ describe('<SignInForm />', () => {
                 }
             }).render();
 
-        wrapper.find(Form).simulate('submit');
+        wrapper.find(Form).simulate('submit', { preventDefault() {} });
 
-        expect(signInMock).toHaveBeenCalled();
-
+        expect(signInMock).toHaveBeenCalledWith("test_form_value", "test_form_value");
     });
 });
