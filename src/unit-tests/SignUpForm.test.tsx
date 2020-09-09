@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 
 import {configure, shallow, ShallowWrapper} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -8,9 +8,15 @@ import {Form, Button, Card} from 'react-bootstrap';
 
 configure({adapter: new Adapter()});
 
+jest.mock('react', () => {
+    const originReact = jest.requireActual('react');
+    return {
+        ...originReact,
+        useRef: jest.fn(),
+    };
+});
 
 describe('<SignUpForm />', () => {
-
     let wrapper: ShallowWrapper<any, Readonly<{}>, React.Component<{}, {}, any>>;
 
     beforeEach(() => {
@@ -71,5 +77,37 @@ describe('<SignUpForm />', () => {
                 Sign Up
             </Button>
         )).toEqual(true);
+    });
+
+    it('should call sign up handler function', () => {
+        const loginRef = {current: {value: "test_login"}};
+        const passwordRef = {current: {value: "test_password"}};
+        // @ts-ignore
+        useRef.mockReturnValueOnce(loginRef).mockReturnValueOnce(passwordRef).mockReturnValueOnce(passwordRef);
+        const signUpMock = jest.fn();
+        wrapper.setProps({onSingUp: signUpMock});
+
+        wrapper.find(Form).simulate('submit', {
+            preventDefault() {
+            }
+        });
+
+        expect(signUpMock).toHaveBeenCalledWith("test_login", "test_password");
+    });
+
+    it('should not call sign up handler function as password not match', () => {
+        const loginRef = {current: {value: "test_login"}};
+        const passwordRef = {current: {value: "test_password"}};
+        const passwordRef2 = {current: {value: "test-password"}};
+        // @ts-ignore
+        useRef.mockReturnValueOnce(loginRef).mockReturnValueOnce(passwordRef).mockReturnValueOnce(passwordRef2);
+        const signUpMock = jest.fn();
+        wrapper.setProps({onSingUp: signUpMock});
+
+        wrapper.find(Form).simulate('submit', {
+            preventDefault() {
+            }
+        });
+        expect(signUpMock).not.toHaveBeenCalled();
     });
 });

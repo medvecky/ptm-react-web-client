@@ -73,28 +73,15 @@ describe('<SignInForm />', () => {
     });
 
     it('should call sign in handler function', () => {
-        const mRef = { current: { value: "test_form_value" } };
+        const loginRef = {current: {value: "test_login"}};
+        const passwordRef = {current: {value: "test_password"}};
         // @ts-ignore
-        useRef.mockReturnValue(mRef);
+        useRef.mockReturnValueOnce(loginRef).mockReturnValueOnce(passwordRef);
         const signInMock = jest.fn();
         wrapper.setProps({onSignIn: signInMock});
-        // @ts-ignore
-        wrapper.find(Form.Control).find('[type="email"]').simulate("change",
-            {
-                target: {
-                    value: 'test@mail.com'
-                }
-            }).render();
-
-        wrapper.find(Form.Control).find('[type="password"]').simulate("change",
-            {
-                target: {
-                    value: 'password'
-                }
-            }).render();
 
         wrapper.find(Form).simulate('submit', { preventDefault() {} });
 
-        expect(signInMock).toHaveBeenCalledWith("test_form_value", "test_form_value");
+        expect(signInMock).toHaveBeenCalledWith("test_login", "test_password");
     });
 });
