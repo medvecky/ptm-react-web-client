@@ -2,8 +2,8 @@ import React, {useRef} from 'react';
 
 import {configure, shallow, ShallowWrapper} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import CreateProjectForm from "../components/CreateProjectForm/CreateProjectForm";
 import {Button, Card, Form} from "react-bootstrap";
+import EditProjectForm from "../components/EditProjectForm/EditProjectForm";
 
 configure({adapter: new Adapter()});
 
@@ -16,12 +16,14 @@ jest.mock('react', () => {
     };
 });
 
-describe('<CreateProjectForm />', () => {
+describe('<EditProjectForm/>', () => {
     let wrapper: ShallowWrapper<any, Readonly<{}>, React.Component<{}, {}, any>>;
+
+    const project = {title: 'test_title', description: 'test_description'};
 
     beforeEach(() => {
         // @ts-ignore
-        wrapper = shallow(<CreateProjectForm/>);
+        wrapper = shallow(<EditProjectForm project={project}/>);
     });
 
     it('should render <Form />', () => {
@@ -42,8 +44,13 @@ describe('<CreateProjectForm />', () => {
     });
 
     it('should render <Form.Control type="text" placeholder="Enter project\'s title" required/>', () => {
-        expect(wrapper.contains(<Form.Control type="text" placeholder="Enter project's title" required/>))
-            .toEqual(true);
+        expect(wrapper.contains(
+            <Form.Control
+                type="text"
+                placeholder="Enter projects's title"
+                defaultValue="test_title"
+            />
+        )).toEqual(true);
     });
 
     it('should render  <Form.Label>Description</Form.Label>', () => {
@@ -52,8 +59,12 @@ describe('<CreateProjectForm />', () => {
     });
 
     it('should render  <Form.Control type="text" placeholder="Enter projects\'s description"/>', () => {
-        expect(wrapper.contains(<Form.Control type="text" placeholder="Enter projects's description"/>))
-            .toEqual(true);
+        expect(wrapper.contains(
+            <Form.Control
+                type="text"
+                placeholder="Enter project's description"
+                defaultValue="test_description"/>
+        )).toEqual(true);
     });
 
     it('should render <Card.Body>error</Card.Body>) as error present', () => {
@@ -65,28 +76,28 @@ describe('<CreateProjectForm />', () => {
         )).toEqual(true);
     });
 
-    it('should render create project button', () => {
+    it('should render edit project button', () => {
         expect(wrapper.contains(
             <Button variant="outline-info" type="submit" size='sm'>
-                Create Project
+                Save changes
             </Button>
         )).toEqual(true);
     });
 
-    it('should call create project handler', () => {
+    it('should call edit project handler', () => {
         const titleInputRef = {current: {value: "test_title"}};
         const descriptionInputRef = {current: {value: "test_description"}};
         // @ts-ignore
         useRef.mockReturnValueOnce(titleInputRef).mockReturnValueOnce(descriptionInputRef);
-        const onCreateProjectMock = jest.fn();
-        wrapper.setProps({onCreateProject: onCreateProjectMock});
+        const onSubmitMock = jest.fn();
+        wrapper.setProps({onSubmit: onSubmitMock});
 
         wrapper.find(Form).simulate('submit', {
             preventDefault() {
             }
         });
 
-        expect(onCreateProjectMock)
+        expect(onSubmitMock)
             .toHaveBeenCalledWith({"description": "test_description", "title": "test_title"});
     });
 });
