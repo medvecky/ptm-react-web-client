@@ -96,7 +96,7 @@ describe('<CreateTaskForm />', () => {
         )).toEqual(true);
     });
 
-    it('should call create project handler', () => {
+    it('should call create task handler', () => {
         const titleInputRef = {current: {value: "test_title"}};
         const descriptionInputRef = {current: {value: "test_description"}};
         const projectInputRef = {current: {value: "test_project"}};

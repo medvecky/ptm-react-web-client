@@ -3,7 +3,7 @@ import React, {useRef} from 'react';
 import {configure, shallow, ShallowWrapper} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import {Button, Card, Form} from "react-bootstrap";
-import EditTaskForm from "../components/EditTaskForm/EditTaskForm";
+import EditTaskProjectForm from "../components/EditTaskProjectForm/EditTaskProjectForm";
 
 configure({adapter: new Adapter()});
 
@@ -16,13 +16,13 @@ jest.mock('react', () => {
     };
 });
 
-describe('<EditTaskForm />', () => {
+describe('<EditTaskProjectForm />', () => {
     let wrapper: ShallowWrapper<any, Readonly<{}>, React.Component<{}, {}, any>>;
 
     beforeEach(() => {
         // @ts-ignore
         wrapper = shallow(
-            <EditTaskForm
+            <EditTaskProjectForm
                 // @ts-ignore
                 task={{title: 'test_title', description: 'test_description', status: 'test_status', projectId: 'xxx'}}
                 projects={[]}
@@ -78,20 +78,31 @@ describe('<EditTaskForm />', () => {
         )).toEqual(true);
     });
 
-    it('should render empty project name as task without project', () => {
+    it('should render empty select project element', () => {
         expect(wrapper.contains(
-            <Form.Group controlId="formProject">
-                <Form.Label>{''}</Form.Label>
-            </Form.Group>
+            <Form.Control as="select" custom>
+                <option value=''>none</option>
+            </Form.Control>
         )).toEqual(true);
     });
 
-    it('should render project name', () => {
+    it('should render project select without selected project', () => {
+        wrapper.setProps({projects: [{title: 'test_project', id: 'yyy'}]});
+        expect(wrapper.contains(
+            <Form.Control as="select" custom>
+                <option value=''>none</option>
+                <option value='yyy'>test_project</option>
+            </Form.Control>
+        )).toEqual(true);
+    });
+
+    it('should render project select with selected project', () => {
         wrapper.setProps({projects: [{title: 'test_project', id: 'xxx'}]});
         expect(wrapper.contains(
-            <Form.Group controlId="formProject">
-                <Form.Label>test_project</Form.Label>
-            </Form.Group>
+            <Form.Control as="select" custom>
+                <option value=''>none</option>
+                <option value='xxx' selected>test_project</option>
+            </Form.Control>
         )).toEqual(true);
     });
 
@@ -112,28 +123,53 @@ describe('<EditTaskForm />', () => {
         )).toEqual(true);
     });
 
-    it('should call edit task handler', () => {
+    it('should call edit task project handler', () => {
         const titleInputRef = {current: {value: "test_title"}};
         const descriptionInputRef = {current: {value: "test_description"}};
+        const projectInputRef = {current: {value: "test_project"}};
         // @ts-ignore
         useRef.mockReturnValueOnce(titleInputRef)
-            .mockReturnValueOnce(descriptionInputRef);
-        const onSubmitMock = jest.fn();
-        wrapper.setProps({onSubmit: onSubmitMock});
+            .mockReturnValueOnce(descriptionInputRef)
+            .mockReturnValueOnce(projectInputRef);
+        const onEditTaskProjectMock = jest.fn();
+        const onDeleteTaskProjectMock = jest.fn();
+        wrapper.setProps(
+            {
+                onEditTaskProject: onEditTaskProjectMock,
+                onDeleteTaskProject: onDeleteTaskProjectMock,
+                task: {id: 'task_id'}
+            });
 
         wrapper.find(Form).simulate('submit', {
             preventDefault() {
             }
         });
 
-        expect(onSubmitMock)
-            .toHaveBeenCalledWith(
-                {
-                    "description": "test_description",
-                    "title": "test_title",
-                    "id": undefined,
-                    "projectId": "xxx",
-                    "status": "test_status",
-                });
+        expect(onEditTaskProjectMock).toHaveBeenCalledWith("task_id", "test_project");
+    });
+
+    it('should call delete task project handler', () => {
+        const titleInputRef = {current: {value: "test_title"}};
+        const descriptionInputRef = {current: {value: "test_description"}};
+        const projectInputRef = {current: {value: ""}};
+        // @ts-ignore
+        useRef.mockReturnValueOnce(titleInputRef)
+            .mockReturnValueOnce(descriptionInputRef)
+            .mockReturnValueOnce(projectInputRef);
+        const onEditTaskProjectMock = jest.fn();
+        const onDeleteTaskProjectMock = jest.fn();
+        wrapper.setProps(
+            {
+                onEditTaskProject: onEditTaskProjectMock,
+                onDeleteTaskProject: onDeleteTaskProjectMock,
+                task: {id: 'task_id'}
+            });
+
+        wrapper.find(Form).simulate('submit', {
+            preventDefault() {
+            }
+        });
+
+        expect(onDeleteTaskProjectMock).toHaveBeenCalledWith("task_id");
     });
 });

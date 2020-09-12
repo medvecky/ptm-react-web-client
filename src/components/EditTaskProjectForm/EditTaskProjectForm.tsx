@@ -75,7 +75,7 @@ const EditTaskProjectForm: React.FC<EditTaskProjectProps> = (props) => {
                 {props.error &&
                 <Form.Group controlId="error">
                     <Card border='danger' text='danger'>
-                        <Card.Body>  {props.error} </Card.Body>
+                        <Card.Body>{props.error}</Card.Body>
                     </Card>
                 </Form.Group>
                 }
