@@ -1,7 +1,6 @@
 import React from 'react';
 import {Card, Button} from "react-bootstrap";
 import {Project} from "../project.model";
-import {EditProjectDto} from "../edit-project.dto";
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {setProjectsFilter} from '../store/projectsSlice'
@@ -9,7 +8,6 @@ import {setProjectsFilter} from '../store/projectsSlice'
 interface ProjectProps {
     project: Project;
     onDeleteProject: (projectId: string) => void;
-    onEditProject: (editProjectDto: EditProjectDto) => void;
 }
 
 const ProjectForm: React.FC<ProjectProps> = props => {

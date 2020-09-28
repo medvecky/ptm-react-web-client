@@ -53,7 +53,6 @@ const ProjectsList: React.FC<ProjectsListProps> = props => {
                         <ProjectForm
                             project={project}
                             onDeleteProject={props.onDeleteProject}
-                            onEditProject={props.onEditProject}
                         />
                     </Row>)}
         </Container>
