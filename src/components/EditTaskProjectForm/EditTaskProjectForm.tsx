@@ -21,11 +21,11 @@ const EditTaskProjectForm: React.FC<EditTaskProjectProps> = (props) => {
 
             if (project.id === props.task.projectId) {
                 return (
-                    <option value={project.id} selected>{project.title}</option>
+                    <option key={project.id} value={project.id} selected>{project.title}</option>
                 );
             } else {
                 return (
-                    <option value={project.id}>{project.title}</option>
+                    <option key={project.id} value={project.id}>{project.title}</option>
                 );
             }
         }

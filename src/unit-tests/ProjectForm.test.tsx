@@ -1,21 +1,43 @@
-import {configure, mount, shallow, ShallowWrapper} from 'enzyme';
+import {configure, mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from "react";
 import ProjectForm from "../components/ProjectForm";
 // @ts-ignore
 import configureStore from 'redux-mock-store';
-import {Provider} from "react-redux";
+import {Provider, useDispatch} from "react-redux";
 import {HashRouter} from "react-router-dom";
 
 configure({adapter: new Adapter()});
+
+jest.mock("react-redux", () => {
+    const { Provider, useSelector } = jest.requireActual("react-redux");
+
+    return {
+        useDispatch: jest.fn(),
+        // we ensure that these are original
+        useSelector,
+        Provider
+    };
+});
+
 
 describe('<ProjectFrorm />', () => {
     const initialState = {output: 100}
     const mockStore = configureStore();
     // @ts-ignore
     let wrapper;
+    // @ts-ignore
     let store;
+    // @ts-ignore
+    let dispatchMock;
+    const onDeleteMockHandler = jest.fn();
     beforeEach(() => {
+        dispatchMock = jest.fn();
+        // @ts-ignore
+        dispatchMock.mockImplementation(action => store.dispatch(action));
+        // @ts-ignore
+        useDispatch.mockReturnValue(dispatchMock);
+
         store = mockStore(initialState);
         wrapper = mount(
             <Provider store={store}>
@@ -26,8 +48,8 @@ describe('<ProjectFrorm />', () => {
                         title: 'test_title',
                         description: 'test_desc'
                     }}
-                    onDeleteProject={() => {
-                    }}/>
+                    onDeleteProject={onDeleteMockHandler}
+                />
                 </HashRouter>
             </Provider>
         );
@@ -63,9 +85,26 @@ describe('<ProjectFrorm />', () => {
         expect(wrapper.find('Button').at(0).text()).toEqual('Edit');
     });
 
+    it('should render Edit <Button> with link to project', () => {
+        // @ts-ignore
+        expect(wrapper.find('Button').at(0).find('Link').find({to: "/project/xxx"})).toHaveLength(1);
+    });
+
     it('should render Delete <Button>', () => {
         // @ts-ignore
         expect(wrapper.find('Button').at(1).text()).toEqual('Delete');
     });
 
+    it('should call on delete handler when  Delete <Button> pressed', () => {
+        // @ts-ignore
+        wrapper.find('Button').at(1).simulate('click');
+        expect(onDeleteMockHandler).toHaveBeenCalled();
+    });
+
+    it('should set project filter when <Card.Title> pressed', () => {
+        // @ts-ignore
+        wrapper.find('CardTitle').find('div').simulate('click');
+        // @ts-ignore
+        expect(dispatchMock).toHaveBeenCalledWith({"payload": "xxx", "type": "projects/setProjectsFilter"});
+    });
 });

@@ -33,7 +33,7 @@ const EditProjectForm: React.FC<EditProjectProps> = (props) => {
                     <Form.Label>Title</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter projects's title"
+                        placeholder="Enter project's title"
                         defaultValue={props.project.title}
                         ref={titleRef}/>
                 </Form.Group>
