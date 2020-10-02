@@ -469,8 +469,6 @@ const PTMContainer: React.FC = (props) => {
 
     let routes;
 
-    console.log('Token ',token );
-
     if (token && expiresDate > new Date()) {
         routes = (
             <div className='main'>

@@ -24,7 +24,7 @@ const CreateTaskForm: React.FC<CreateTaskProps> = props => {
     };
 
     const selectProjectFormControl = props.projects.map(project =>
-        <option value={project.id}>{project.title}</option>
+        <option key={project.id} value={project.id}>{project.title}</option>
     );
 
     return (
@@ -45,7 +45,7 @@ const CreateTaskForm: React.FC<CreateTaskProps> = props => {
                 <Form.Group controlId="formProject">
                     <Form.Label>Project</Form.Label>
                     <Form.Control as="select" custom ref={projectInputRef}>
-                        <option value = ''>none</option>
+                        <option key='' value = ''>none</option>
                         {selectProjectFormControl}
                     </Form.Control>
                 </Form.Group>

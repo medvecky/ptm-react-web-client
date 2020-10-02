@@ -47,7 +47,7 @@ describe('<EditProjectForm/>', () => {
         expect(wrapper.contains(
             <Form.Control
                 type="text"
-                placeholder="Enter projects's title"
+                placeholder="Enter project's title"
                 defaultValue="test_title"
             />
         )).toEqual(true);

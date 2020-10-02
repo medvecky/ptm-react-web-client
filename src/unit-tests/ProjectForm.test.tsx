@@ -14,7 +14,6 @@ jest.mock("react-redux", () => {
 
     return {
         useDispatch: jest.fn(),
-        // we ensure that these are original
         useSelector,
         Provider
     };
