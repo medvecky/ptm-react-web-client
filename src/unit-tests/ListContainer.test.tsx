@@ -23,9 +23,6 @@ describe('<ListContainer/>', () => {
             editProjectHandler={()=>{}}
             error={''}/>);
     });
-    it('test', () => {
-        console.log(wrapper.debug());
-    });
 
     it('should render <Container/>', ()=>{
         expect(wrapper.find(Container)).toHaveLength(1);
